@@ -1,16 +1,16 @@
 abstract class Block
 {
-  float xPos;
-  float yPos;
+  PVector position;
+  String type;
   
-  Block(float xPos, float yPos)
+  Block(PVector position, String type)
   {
-    xPosition = xPos;
-    yPosition = yPos;
+    this.position = position;
+    this.type = "Block.null";
   }
   
   void draw()
   {
-    
+    rect(position.x, position.y, blockSize, blockSize);
   }
 }
