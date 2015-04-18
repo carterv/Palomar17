@@ -1,10 +1,10 @@
 class BlockDirt extends Block
 {
-  public BlockDirt(PVector position)
+  BlockDirt(PVector position)
   {
     super(position);
     
-    type = "block.dirt"
+    type = "Block.Dirt";
     sprite = spriteManager.getSprite(type);
   }
 }

@@ -4,7 +4,7 @@ abstract class Block
   String type;
   PImage sprite;
   
-  Block(PVector position, String type)
+  Block(PVector position)
   {
     this.position = position;
     this.type = "Block.Null";
@@ -16,6 +16,9 @@ abstract class Block
   
   void draw()
   {
-    if (sprite != null) image(sprite, position.x, position.y);
+    if (sprite != null)
+    {
+      image(sprite, position.x, position.y);
+    }
   }
 }
