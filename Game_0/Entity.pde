@@ -4,20 +4,27 @@ abstract class Entity
   private PVector hitbox;
   private PVector velocity;
   private PVector acceleration;
+  private String type;
   
   Entity(PVector position)
   {
     this.position = position;
+    this.type = "Entity.null";
+    this.hitbox = new PVector(blockSize, blockSize);
+    this.velocity = new PVector();
+    this.acceleration = new PVector();
   }
   
   void update()
   {
-    
+    this.position.add(this.velocity);
+    this.velocity.add(this.acceleration);
   }
   
   void draw()
   {
-    
+    fill(255);
+    rect(position.x, position.y, hitbox.x, hitbox.y);
   }
   
   PVector getVelocity()
