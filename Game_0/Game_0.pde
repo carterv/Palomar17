@@ -1,12 +1,12 @@
 int blockSize;
-PImage blockDirtSprite;
+SpriteManager spriteManager;
 
 void setup()
 {
   size(1000,600);
   background(255,255,255);
   blockSize = 10;
-  blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
+  spriteManager = new SpriteManager();
 }
 
 void draw()
