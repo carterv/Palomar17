@@ -12,7 +12,7 @@ void setup()
   
   spriteManager = new SpriteManager();
   entities = new ArrayList<Entity>();
-  blocks = new Block[width/blockSize][height/blockSize];
+  blocks = new Block[(width/blockSize)+1][height/blockSize];
   
   //for now
   entities.add(new EntityPlayer(new PVector(width/2, height/2)));
@@ -30,13 +30,6 @@ void draw()
   
   //for now
   renderBlocks();
-  for (int i = 0; i < blocks.length; i++)
-  {
-    for (int j = 0; j < blocks[i].length; j++)
-    {
-      blocks[i][j].draw();
-    }
-  }
 }
 
 void renderBlocks()
@@ -45,7 +38,11 @@ void renderBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-        blocks[i][j] = new BlockDirt(new PVector(i, j));
+      if (j > 55)
+      {
+        blocks[i][j] = new BlockDirt(new PVector((i-1)*blockSize, j*blockSize));
+        blocks[i][j].draw();
+      }
     }
   }
 }
