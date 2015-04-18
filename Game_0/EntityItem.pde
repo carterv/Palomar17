@@ -4,7 +4,8 @@ class EntityItem extends Entity
   EntityItem(PVector position, String type)
   {
     super(position);
-    type="Entity.Item."+type;
+    this.type="Entity.Item."+type;
+    this.hitbox = new PVector(blockSize, blockSize);
   }
   
   void update()

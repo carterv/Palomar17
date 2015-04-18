@@ -5,7 +5,7 @@ abstract class Item{
   private float modDuration;
   private String type;
   
-  Item(String modType, float modValue, float modDuration, String type)
+  Item(String modType, float modValue, float modDuration)
   {
     this.modType=modType;
     this.modValue=modValue;
