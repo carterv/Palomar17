@@ -8,7 +8,7 @@ void setup()
   size(1000,600);
   background(0);
   
-  blockSize = 10;
+  blockSize = 20;
   
   spriteManager = new SpriteManager();
   entities = new ArrayList<Entity>();
@@ -16,6 +16,7 @@ void setup()
   
   //for now
   entities.add(new EntityPlayer(new PVector(width/2, height/2)));
+  fillBlocks();
 }
 
 void draw()
@@ -27,9 +28,24 @@ void draw()
     
     //add entity removal code here
   }
-  
-  //for now
   renderBlocks();
+}
+
+
+//for now
+void fillBlocks()
+{
+  for (int i = 0; i < blocks.length; i++)
+  {
+    for (int j = 0; j < blocks[i].length; j++)
+    {
+      if (j > 25)
+      {
+        blocks[i][j] = new BlockDirt(new PVector((i-1)*blockSize, j*blockSize));
+        blocks[i][j].draw();
+      }
+    }
+  }
 }
 
 void renderBlocks()
@@ -38,9 +54,8 @@ void renderBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-      if (j > 55)
+      if(blocks[i][j] != null)
       {
-        blocks[i][j] = new BlockDirt(new PVector((i-1)*blockSize, j*blockSize));
         blocks[i][j].draw();
       }
     }
