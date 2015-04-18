@@ -1,12 +1,17 @@
-public abstract class
+abstract class Entity
 {
-  contructor()
+  Entity()
   {
+    
   }
-  update()
+  
+  void update()
   {
+    
   }
-  draw()
+  
+  void draw()
   {
+    
   }
 }
