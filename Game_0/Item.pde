@@ -1,9 +1,9 @@
 abstract class Item{
   
-  private String modType;
-  private float modValue;
-  private float modDuration;
-  private String type;
+  String modType;
+  float modValue;
+  float modDuration;
+  String type;
   
   Item(String modType, float modValue, float modDuration)
   {
