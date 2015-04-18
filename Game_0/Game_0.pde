@@ -21,6 +21,7 @@ void setup()
 
 void draw()
 {
+  background(0);
   for (Entity e : entities)
   {
     e.draw();
