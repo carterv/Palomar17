@@ -17,7 +17,7 @@ class SpriteManager
     blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
   }
   
-  PImage getSprite(String type, int drawSize)
+  PImage getSprite(String type)
   {
     PImage temp = sprites.get(type);
     return temp;
