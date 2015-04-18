@@ -51,4 +51,9 @@ abstract class Entity
   {
     return this.hitbox;
   }
+  
+  String getType()
+  {
+    return this.type;
+  }
 }
