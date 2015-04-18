@@ -27,7 +27,16 @@ void draw()
     
     //add entity removal code here
   }
+  
+  //for now
   renderBlocks();
+  for (int i = 0; i < blocks.length; i++)
+  {
+    for (int j = 0; j < blocks[i].length; j++)
+    {
+      blocks[i][j].draw();
+    }
+  }
 }
 
 void renderBlocks()
@@ -36,12 +45,8 @@ void renderBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-      if (i < 100 && i > 97)
-      {
-        PVector blockPos = new PVector(i, j);
-        BlockDirt newDirt = new BlockDirt(blockPos);
-        newDirt.draw();
-      }
+        blocks[i][j] = new BlockDirt(new PVector(i, j));
     }
   }
 }
+

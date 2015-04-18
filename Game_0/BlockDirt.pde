@@ -5,6 +5,6 @@ class BlockDirt extends Block
     super(position);
     
     type = "Block.Dirt";
-    sprite = spriteManager.getSprite(type);
+    sprite = spriteManager.getSprite(type, blockSize);
   }
 }
