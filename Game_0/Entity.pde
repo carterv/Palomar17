@@ -1,10 +1,10 @@
 abstract class Entity
 {
-  private PVector position;
-  private PVector hitbox;
-  private PVector velocity;
-  private PVector acceleration;
-  private String type;
+  PVector position;
+  PVector hitbox;
+  PVector velocity;
+  PVector acceleration;
+  String type;
   
   Entity(PVector position)
   {
