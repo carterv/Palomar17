@@ -2,6 +2,7 @@ abstract class Block
 {
   PVector position;
   String type;
+  PImage sprite;
   
   Block(PVector position, String type)
   {
@@ -9,8 +10,12 @@ abstract class Block
     this.type = "Block.null";
   }
   
+  void update()
+  {
+  }
+  
   void draw()
   {
-    rect(position.x, position.y, blockSize, blockSize);
+    if (sprite != null) image(sprite, position.x, position.y);
   }
 }
