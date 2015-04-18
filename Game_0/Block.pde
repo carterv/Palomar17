@@ -7,7 +7,7 @@ abstract class Block
   Block(PVector position, String type)
   {
     this.position = position;
-    this.type = "Block.null";
+    this.type = "Block.Null";
   }
   
   void update()

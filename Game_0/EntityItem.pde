@@ -1,7 +1,7 @@
 class EntityItem extends Entity
 {
   
-  Item(PVector position, Sting type)
+  EntityItem(PVector position, String type)
   {
     super(position);
     type="Entity.Item."+type;
@@ -9,14 +9,36 @@ class EntityItem extends Entity
   
   void update()
   {
-    super.update;
+    super.update();
   }
   
   void draw()
   {
-    if(type.equals(Entity.Item.Weapon))
+    if(this.getType().equals("Entity.Item.Weapon"))
     {
       fill(255,0,0);
+      ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
+    }
+    else if(this.getType().equals("Entity.Item.Armor"))
+    {
+      fill(0,0,255);
+      ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
+    }
+    else if(this.getType().equals("Entity.Item.Potion"))
+    {
+      fill(0,255,0);
+      ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
+    }
+    else if(this.getType().equals("Entity.Item.Gold"))
+    {
+      fill(255,255,0);
+      ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
+    }
+    else
+    {
+      //error/unkown/misc item
+      fill(0,255,255);
+      ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
     }
   }
 }

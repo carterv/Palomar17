@@ -9,7 +9,7 @@ abstract class Entity
   Entity(PVector position)
   {
     this.position = position;
-    this.type = "Entity.null";
+    this.type = "Entity.Null";
     this.hitbox = new PVector(blockSize, blockSize);
     this.velocity = new PVector();
     this.acceleration = new PVector();
