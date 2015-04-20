@@ -11,13 +11,20 @@ class SpriteManager
     sprites = new HashMap<String, PImage>();
     
     sprites.put("Block.Dirt", blockDirtSprite.get());
-    //sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Item.Weapon", itemWeapon.get());
   }
   
   void loadSprites()
   {
     blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
-    //itemWeapons = loadImage("/Sprites/ItemWeapons.png");
+    itemWeapon = loadImage("/Sprites/ItemWeapon.png");
+  }
+  
+  PImage getSprite(String type)
+  {
+    PImage temp = sprites.get(type);
+    //temp.resize(0, size);
+    return sprites.get(type);
   }
   
   PImage getSprite(String type, int size)
