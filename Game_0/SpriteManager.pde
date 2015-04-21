@@ -4,6 +4,7 @@ class SpriteManager
   
   PImage blockDirtSprite;
   PImage itemWeapon;
+  PImage entityPlayer;
   
   SpriteManager()
   {
@@ -12,12 +13,14 @@ class SpriteManager
     
     sprites.put("Block.Dirt", blockDirtSprite.get());
     sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Entity.Player", entityPlayer.get());
   }
   
   void loadSprites()
   {
     blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
     itemWeapon = loadImage("/Sprites/ItemWeapon.png");
+    entityPlayer = loadImage("/Sprites/charactertemplate2.png");
   }
   
   PImage getSprite(String type)

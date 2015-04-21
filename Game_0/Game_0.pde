@@ -1,7 +1,9 @@
 int blockSize;
 SpriteManager spriteManager;
-ArrayList<Entity> entities;
 Block[][] blocks;
+ArrayList<Entity> entities;
+final float MOVESPEED = 3.5;
+int keyDown;
 
 void setup()
 {
@@ -11,17 +13,18 @@ void setup()
   blockSize = 20;
   
   spriteManager = new SpriteManager();
+  EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
   blocks = new Block[(width/blockSize)+1][height/blockSize];
   
-  //for now
-  entities.add(new EntityPlayer(new PVector(width/2, height/2)));
+  //for now 
+  entities.add(character);
   fillBlocks();
 }
 
 void draw()
 {
-  background(0);
+  background(255);
   for (Entity e : entities)
   {
     e.draw();
@@ -59,6 +62,29 @@ void renderBlocks()
       {
         blocks[i][j].draw();
       }
+    }
+  }
+}
+
+void keyPressed()
+{
+  if (keyCode == RIGHT)
+  {
+    keyDown = 1;
+  }
+  else if (keyCode == LEFT)
+  {
+    keyDown = 2;
+  }
+}
+
+void keyReleased()
+{
+  if (keyCode == RIGHT || keyCode == LEFT)
+  {
+    if (keyDown == 1 || keyDown == 2)
+    {
+      keyDown = 0;
     }
   }
 }

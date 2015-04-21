@@ -5,13 +5,14 @@ abstract class Entity
   PVector velocity;
   PVector acceleration;
   String type;
+  PImage sprite;
   
   Entity(PVector position)
   {
     this.position = position;
     this.type = "Entity.Null";
     this.hitbox = new PVector(blockSize, blockSize);
-    this.velocity = new PVector();
+    this.velocity = new PVector(0, 0);
     this.acceleration = new PVector(0, 1);
   }
   
@@ -19,12 +20,18 @@ abstract class Entity
   {
     this.position.add(this.velocity);
     this.velocity.add(this.acceleration);
+    if (this.position.y > 480)
+    {
+      this.setVelocity(new PVector(0, 0));
+    }
   }
   
   void draw()
   {
-    fill(255);
-    rect(position.x, position.y, hitbox.x, hitbox.y);
+    if (sprite != null)
+    {
+      image(sprite, position.x, position.y);
+    }
   }
   
   PVector getVelocity()
