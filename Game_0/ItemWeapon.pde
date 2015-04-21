@@ -1,4 +1,4 @@
-class ItemWeapon extends Item
+/*class ItemWeapon extends Item
 {
   ItemWeapon(String modType, float modValue, float modDuration, String type)
   {
@@ -10,4 +10,4 @@ class ItemWeapon extends Item
   {
     //image();
   }
-}
+}*/

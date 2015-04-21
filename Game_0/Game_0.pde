@@ -8,7 +8,7 @@ boolean inventory;
 
 void setup()
 {
-  size(1000,600);
+  size(1000, 600);
   background(0);
 
   blockSize = 20;
@@ -21,19 +21,44 @@ void setup()
   //for now 
   entities.add(character);
   fillBlocks();
+  
+  EntityItem melee = new EntityItem(new PVector(width/4, height/2),"Melee");
+  EntityItem ranged = new EntityItem(new PVector(width*3/4, height/2),"Ranged");
+  entities.add(melee);
+  entities.add(ranged);
+
+  inventory=false;
 }
 
 void draw()
 {
-  background(255);
-  for (Entity e : entities)
+  if (!inventory)
   {
-    e.draw();
-    e.update();
-
-    //add entity removal code here
+    background(255);
+    
+    ArrayList<Entity> removal = new ArrayList<Entity>();
+    for (Entity e : entities)
+    {
+      e.draw();
+      e.update();
+      
+      if(!e.isAlive())
+      {
+        removal.add(e);
+      }
+    }
+    
+    for (Entity r : removal)
+    {
+      entities.remove(r);
+    }
+    
+    renderBlocks();
   }
-  renderBlocks();
+  else
+  {
+    getPlayer().inventory();
+  }
 }
 
 
@@ -59,7 +84,7 @@ void renderBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-      if(blocks[i][j] != null)
+      if (blocks[i][j] != null)
       {
         blocks[i][j].draw();
       }
@@ -72,8 +97,7 @@ void keyPressed()
   if (keyCode == RIGHT)
   {
     keyDown = 1;
-  }
-  else if (keyCode == LEFT)
+  } else if (keyCode == LEFT)
   {
     keyDown = 2;
   }
@@ -94,3 +118,17 @@ void keyReleased()
     }
   }
 }
+
+EntityPlayer getPlayer()
+{
+  EntityPlayer returnVal=null;
+  for (Entity e : entities)
+  {
+    if (e instanceof EntityPlayer)
+    {
+      returnVal = (EntityPlayer)e;
+    }
+  }
+  return returnVal;
+}
+

@@ -29,11 +29,6 @@ class EntityPlayer extends Entity
       this.velocity.set(new PVector(-MOVESPEED, this.velocity.y));
     }
   }
-  
-  void draw()
-  {
-    inventory();
-  }
 
   void inventory()
   {

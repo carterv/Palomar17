@@ -3,7 +3,8 @@ class SpriteManager
   HashMap<String, PImage> sprites;
 
   PImage blockDirtSprite;
-  PImage itemWeapon;
+  PImage itemMelee;
+  PImage itemRanged;
   PImage inventory;
   PImage entityPlayer;
 
@@ -13,7 +14,10 @@ class SpriteManager
     sprites = new HashMap<String, PImage>();
 
     sprites.put("Block.Dirt", blockDirtSprite.get());
-    sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Entity.Item.Melee", itemMelee.get());
+    sprites.put("Item.Melee", itemMelee.get());
+    sprites.put("Entity.Item.Ranged", itemRanged.get());
+    sprites.put("Item.Ranged", itemRanged.get());
     sprites.put("Inventory", inventory.get());
     sprites.put("Entity.Player", entityPlayer.get());
   }
@@ -21,7 +25,8 @@ class SpriteManager
   void loadSprites()
   {
     blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
-    itemWeapon = loadImage("/Sprites/ItemWeapon.png");
+    itemMelee = loadImage("/Sprites/ItemMelee.png");
+    itemRanged = loadImage("Sprites/ItemRanged.png");
     inventory = loadImage("/Sprites/Inventory.png");
     entityPlayer = loadImage("/Sprites/charactertemplate2.png");
   }

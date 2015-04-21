@@ -1,4 +1,4 @@
-abstract class Item
+class Item
 {
   String modType;
   float modValue;
@@ -6,13 +6,13 @@ abstract class Item
   String type;
   PImage sprite;
   
-  Item(String modType, float modValue, float modDuration)
+  Item(String modType, float modValue, float modDuration, String type)
   {
     this.modType=modType;
     this.modValue=modValue;
     this.modDuration=modDuration;
     this.type="Item."+type;
-    sprite = spriteManager.getSprite(type, 1);
+    sprite = spriteManager.getSprite(type);
   }
   
   void draw()
