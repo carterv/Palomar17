@@ -4,19 +4,20 @@ Block[][] blocks;
 ArrayList<Entity> entities;
 final float MOVESPEED = 3.5;
 int keyDown;
+boolean inventory;
 
 void setup()
 {
   size(1000,600);
   background(0);
-  
+
   blockSize = 20;
-  
+
   spriteManager = new SpriteManager();
   EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
   blocks = new Block[(width/blockSize)+1][height/blockSize];
-  
+
   //for now 
   entities.add(character);
   fillBlocks();
@@ -29,7 +30,7 @@ void draw()
   {
     e.draw();
     e.update();
-    
+
     //add entity removal code here
   }
   renderBlocks();
@@ -76,7 +77,7 @@ void keyPressed()
   {
     keyDown = 2;
   }
-  
+
   if (key == 'i')
   {
     inventory = !inventory;
@@ -93,4 +94,3 @@ void keyReleased()
     }
   }
 }
-
