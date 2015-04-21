@@ -2,6 +2,11 @@ int blockSize;
 SpriteManager spriteManager;
 ArrayList<Entity> entities;
 Block[][] blocks;
+EntityPlayer player;
+
+//input variables
+boolean jump;
+int keyDown;
 
 void setup()
 {
@@ -14,14 +19,22 @@ void setup()
   entities = new ArrayList<Entity>();
   blocks = new Block[(width/blockSize)+1][height/blockSize];
   
+  //input variables
+  jump = false;
+  keyDown = 0;
+  
   //for now
-  entities.add(new EntityPlayer(new PVector(width/2, height/2)));
+  player = new EntityPlayer(new PVector(width/2, height/2));
+  entities.add(player);
   fillBlocks();
 }
 
 void draw()
 {
   background(0);
+  
+  doInput();
+  
   for (Entity e : entities)
   {
     e.draw();
@@ -32,6 +45,36 @@ void draw()
   renderBlocks();
 }
 
+void keyPressed()
+{
+  if (key == 'a' || key == 'A') keyDown = 1;
+  else if (key == 'w' || key == 'W') jump = true;
+  else if (key == 'd' || key == 'D') keyDown = 2;
+}
+
+void keyReleased()
+{
+  if ((key == 'a' || key == 'A') && keyDown == 1) keyDown = 0;
+  else if (key == 'w' || key == 'W') jump = false;
+  else if((key == 'd' || key == 'D') && keyDown == 2) keyDown = 0; 
+}
+
+void doInput()
+{
+  if (keyDown == 1) player.setVelocity(new PVector(-3, player.getVelocity().y));
+  else if (keyDown == 2) player.setVelocity(new PVector(3, player.getVelocity().y));
+  
+  if (jump)
+  {
+    //get player position
+    int px = (int)(player.getPosition().x/blockSize);
+    int py = (int)(player.getPosition().y/blockSize);
+    
+    //check if at lower bound or if there is a block under the player
+    if (py+2 >= blocks[0].length || blocks[px][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x,-7));
+    else if ((px+1)*blockSize+1 < player.getPosition().x+player.getHitbox().x && px+1 < blocks.length && blocks[px+1][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x,-7));
+  }
+}
 
 //for now
 void fillBlocks()

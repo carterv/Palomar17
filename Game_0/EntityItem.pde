@@ -8,11 +8,6 @@ class EntityItem extends Entity
     this.hitbox = new PVector(blockSize, blockSize);
   }
   
-  void update()
-  {
-    super.update();
-  }
-  
   void draw()
   {
     if(this.getType().equals("Entity.Item.Weapon"))
@@ -41,6 +36,11 @@ class EntityItem extends Entity
       fill(0,255,255);
       ellipse(this.getPosition().x,this.getPosition().y,blockSize/2,blockSize/2);
     }
+  }
+  
+  boolean collidedWithBlock()
+  {
+    return false;
   }
 }
 
