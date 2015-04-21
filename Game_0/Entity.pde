@@ -27,82 +27,91 @@ abstract class Entity
     float yVel = velocity.y;
     PVector start = position.get();
     
-    // if the entity has not collided with a block, do movement
-    if (!collidedWithBlock())
+    if (collidable)
     {
-      //try horizontal movement
-      position.x += xVel;
-      
-      //only do collision detection if the entity was moving, so as to avoid doing unnecessary calculations
-      if (collidedWithBlock() && xVel != 0)
+      // if the entity has not collided with a block, do movement
+      if (!collidedWithBlock())
       {
-        //get horizontal direction
-        xVel = xVel/abs(xVel);
+        //try horizontal movement
+        position.x += xVel;
         
-        //reverse direction while the entity is collided, only up to the initial position
-        while (collidedWithBlock() && position.x != start.x)
+        //only do collision detection if the entity was moving, so as to avoid doing unnecessary calculations
+        if (collidedWithBlock() && xVel != 0)
         {
-          position.x -= xVel;
+          //get horizontal direction
+          xVel = xVel/abs(xVel);
+          
+          //reverse direction while the entity is collided, only up to the initial position
+          while (collidedWithBlock() && position.x != start.x)
+          {
+            position.x -= xVel;
+          }
+          
+          //kill horizontal movement because the entity collided
+          velocity.x = 0;
         }
         
-        //kill horizontal movement because the entity collided
-        velocity.x = 0;
-      }
-      
-      //try vertical movement
-      float friction = 0.5;
-      
-      //only move if velocity is above a threshold
-      if (abs(yVel) >= 1) position.y += yVel;
-      
-      //only do collision detection if the entity was moving, same reason as above
-      if (collidedWithBlock() && yVel != 0)
-      {
-        //get vertical direction
-        yVel = yVel/abs(yVel);
+        //try vertical movement
+        float friction = 0.5;
         
-        //reverse direction while the entity is collided, only up to the initial position
-        while (collidedWithBlock() && position.y != start.y)
+        //only move if velocity is above a threshold
+        if (abs(yVel) >= 1) position.y += yVel;
+        
+        //only do collision detection if the entity was moving, same reason as above
+        if (collidedWithBlock() && yVel != 0)
         {
-          position.y -= yVel;
+          //get vertical direction
+          yVel = yVel/abs(yVel);
+          
+          //reverse direction while the entity is collided, only up to the initial position
+          while (collidedWithBlock() && position.y != start.y)
+          {
+            position.y -= yVel;
+          }
+          
+          //TODO: implement fall damage, code goes here
+          
+          //kill vertical movement because the entity collided
+          velocity.y = 0;
         }
         
-        //TODO: implement fall damage, code goes here
+        //add friction
+        if (velocity.x > 0) velocity.x = (velocity.x - friction > 0) ? velocity.x - friction : 0;
+        else if (velocity.x < 0) velocity.x = (velocity.x + friction < 0) ? velocity.x + friction : 0;
         
-        //kill vertical movement because the entity collided
-        velocity.y = 0;
+        //add gravity
+        velocity.add(acceleration);
+        
+        //terminal velocity
+        if (velocity.y > 10) velocity.y = 10;
       }
-      
-      //add friction
-      if (velocity.x > 0) velocity.x = (velocity.x - friction > 0) ? velocity.x - friction : 0;
-      else if (velocity.x < 0) velocity.x = (velocity.x + friction < 0) ? velocity.x + friction : 0;
-      
-      //add gravity
-      velocity.add(acceleration);
-      
-      //terminal velocity
-      if (velocity.y > 10) velocity.y = 10;
+      else //if inside block before movement is applied
+      {
+        int i = 1;
+        while (collidedWithBlock())
+        {
+          //vertical movement attempt
+          position.y -= i;
+          if (!collidedWithBlock()) break;
+          position.y = start.y;
+          
+          //horizontal movement attempts
+          position.x -= i;
+          if (!collidedWithBlock()) break;
+          position.x = start.x + i;
+          if (!collidedWithBlock()) break;
+          position.x = start.x;
+          
+          //increment distance search
+          i++;
+        }
+      }
     }
-    else //if inside block before movement is applied
+    else
     {
-      int i = 1;
-      while (collidedWithBlock())
-      {
-        //vertical movement attempt
-        position.y -= i;
-        if (!collidedWithBlock()) break;
-        position.y = start.y;
-        
-        //horizontal movement attempts
-        position.x -= i;
-        if (!collidedWithBlock()) break;
-        position.x = start.x + i;
-        if (!collidedWithBlock()) break;
-        position.x = start.x;
-        
-        //increment distance search
-        i++;
-      }
+      position.add(velocity);
+      velocity.add(acceleration);
+      if (velocity.y > 10) velocity.y = 10;
     }
   }
   
