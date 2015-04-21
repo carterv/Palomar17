@@ -42,4 +42,4 @@ class EntityPlayer extends Entity
       image(spriteManager.getSprite("Inventory"), width/5, height/2);
     }
   }
-
+}

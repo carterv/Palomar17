@@ -1,5 +1,5 @@
-abstract class Item{
-  
+abstract class Item
+{
   String modType;
   float modValue;
   float modDuration;
