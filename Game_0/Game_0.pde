@@ -76,6 +76,11 @@ void keyPressed()
   {
     keyDown = 2;
   }
+  
+  if (key == 'i')
+  {
+    inventory = !inventory;
+  }
 }
 
 void keyReleased()

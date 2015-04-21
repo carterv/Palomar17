@@ -1,7 +1,7 @@
 class EntityPlayer extends Entity
 {
   boolean onGround;
-  
+
   EntityPlayer(PVector position)
   {
     super(position);
@@ -10,12 +10,12 @@ class EntityPlayer extends Entity
     this.sprite = spriteManager.getSprite(type);
     this.onGround = true;
   }
-  
+
   void update()
   {
     this.position.add(this.velocity);
     this.velocity.add(this.acceleration);
-    
+
     //Shitty collision detection for now
     if (this.position.y > 480)
     {
@@ -24,10 +24,22 @@ class EntityPlayer extends Entity
     if (keyDown == 1)
     {
       this.velocity.set(new PVector(MOVESPEED, this.velocity.y));
-    }
-    else if (keyDown == 2)
+    } else if (keyDown == 2)
     {
       this.velocity.set(new PVector(-MOVESPEED, this.velocity.y));
     }
   }
-}
+  
+  void draw()
+  {
+    inventory();
+  }
+
+  void inventory()
+  {
+    if (inventory)
+    {
+      image(spriteManager.getSprite("Inventory"), width/5, height/2);
+    }
+  }
+

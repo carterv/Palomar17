@@ -4,13 +4,15 @@ abstract class Item{
   float modValue;
   float modDuration;
   String type;
+  PImage sprite;
   
   Item(String modType, float modValue, float modDuration)
   {
     this.modType=modType;
     this.modValue=modValue;
     this.modDuration=modDuration;
-    this.type="Item.Null";
+    this.type="Item."+type;
+    sprite = spriteManager.getSprite(type, 1);
   }
   
   void draw()
