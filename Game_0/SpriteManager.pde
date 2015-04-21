@@ -4,6 +4,8 @@ class SpriteManager
   
   PImage blockDirtSprite;
   PImage itemWeapon;
+  PImage entityPlayerRight;
+  PImage entityPlayerLeft;
   
   SpriteManager()
   {
@@ -11,13 +13,22 @@ class SpriteManager
     sprites = new HashMap<String, PImage>();
     
     sprites.put("Block.Dirt", blockDirtSprite.get());
-    //sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Entity.Player.Right", entityPlayerRight.get());
+    sprites.put("Entity.Player.Left", entityPlayerLeft.get());
   }
   
   void loadSprites()
   {
-    blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
-    //itemWeapons = loadImage("/Sprites/ItemWeapons.png");
+    blockDirtSprite = loadImage("/Sprites/BlockDirt.png");
+    itemWeapon = loadImage("/Sprites/ItemWeapon.png");
+    entityPlayerRight = loadImage("/Sprites/PlayerRight.png");
+    entityPlayerLeft = loadImage("/Sprites/PlayerLeft.png");
+  }
+  
+  PImage getSprite(String type)
+  {
+    return sprites.get(type);
   }
   
   PImage getSprite(String type, int size)

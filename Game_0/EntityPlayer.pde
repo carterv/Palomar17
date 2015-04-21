@@ -5,6 +5,7 @@ class EntityPlayer extends Entity
     super(position);
     this.type = "Entity.Player";
     this.hitbox = new PVector(blockSize, 2*blockSize);
+    this.sprite = spriteManager.getSprite(type + ".Right");
   }
   
   boolean collidedWithBlock()
@@ -23,4 +24,5 @@ class EntityPlayer extends Entity
          || (blocks[i0][j2] != null)
          || (blocks[i1][j2] != null));
   }
+  
 }

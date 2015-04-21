@@ -31,7 +31,7 @@ void setup()
 
 void draw()
 {
-  background(0);
+  background(255);
   
   doInput();
   
@@ -61,8 +61,16 @@ void keyReleased()
 
 void doInput()
 {
-  if (keyDown == 1) player.setVelocity(new PVector(-3, player.getVelocity().y));
-  else if (keyDown == 2) player.setVelocity(new PVector(3, player.getVelocity().y));
+  if (keyDown == 1) 
+  {
+     player.setVelocity(new PVector(-3, player.getVelocity().y));
+     player.setSprite("Left");
+  }
+  else if (keyDown == 2) 
+  {
+    player.setVelocity(new PVector(3, player.getVelocity().y));
+    player.setSprite("Right");
+  }
   
   if (jump)
   {

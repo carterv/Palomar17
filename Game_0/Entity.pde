@@ -6,6 +6,7 @@ abstract class Entity
   PVector acceleration;
   String type;
   boolean collidable;
+  PImage sprite;
   
   Entity(PVector position)
   {
@@ -117,11 +118,18 @@ abstract class Entity
   
   void draw()
   {
-    fill(255);
-    rect(position.x, position.y, hitbox.x, hitbox.y);
+    if (sprite != null)
+    {
+      image(sprite, position.x, position.y);
+    }
   }
   
   abstract boolean collidedWithBlock();
+  
+  void setSprite(String spriteType)
+  {
+     this.sprite = spriteManager.getSprite(type + "." + spriteType);
+  }
   
   PVector getVelocity()
   {
