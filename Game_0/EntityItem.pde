@@ -1,16 +1,14 @@
 class EntityItem extends Entity
 {
   Item item;
-  Item[] inventoryItems;
-  
+
   EntityItem(PVector position, String type)
   {
     super(position);
     this.type="Entity.Item."+type;
     this.hitbox = new PVector(blockSize, blockSize);
     this.sprite = spriteManager.getSprite(this.type);
-    item = new Item("Attack",1,-1,type);
-    inventoryItems = new Item[8];
+    item = new Item("Attack", 1, -1, type);
   }
 
   void update()
@@ -22,14 +20,15 @@ class EntityItem extends Entity
       if ((this.position.y<=getPlayer().getPosition().y+getPlayer().getHitbox().y && this.position.y>=getPlayer().getPosition().y) ||
         (this.position.y+this.hitbox.y<=getPlayer().getPosition().y+getPlayer().getHitbox().y && this.position.y+this.hitbox.y>=getPlayer().getPosition().y))
       {
-        alive=false;
-        /*for(int i=0; i<array.size();i++)
+        if (getPlayer().emptyInventorySlot()!=-1)
         {
-          if(a
-        inventoryItems*/
+          getPlayer().addItem(getPlayer().emptyInventorySlot(),item);
+          alive=false;
+        }
       }
     }
   }
+
 
   void draw()
   {

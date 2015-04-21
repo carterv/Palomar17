@@ -22,10 +22,26 @@ void setup()
   entities.add(character);
   fillBlocks();
   
-  EntityItem melee = new EntityItem(new PVector(width/4, height/2),"Melee");
+  EntityItem melee = new EntityItem(new PVector(width*5/7, height/2),"Melee");
   EntityItem ranged = new EntityItem(new PVector(width*3/4, height/2),"Ranged");
+  EntityItem melee2 = new EntityItem(new PVector(width*3/5, height/2),"Melee");
+  EntityItem ranged2 = new EntityItem(new PVector(width/5, height/2),"Ranged");
+  EntityItem melee3 = new EntityItem(new PVector(width*3/2, height/2),"Melee");
+  EntityItem ranged3 = new EntityItem(new PVector(width/4, height/2),"Ranged");
+  EntityItem melee4 = new EntityItem(new PVector(width/7, height/2),"Melee");
+  EntityItem ranged4 = new EntityItem(new PVector(width*3/8, height/2),"Ranged");
+  EntityItem melee5 = new EntityItem(new PVector(width/9, height/2),"Melee");
+  EntityItem ranged5 = new EntityItem(new PVector(width*3/7, height/2),"Ranged");
   entities.add(melee);
   entities.add(ranged);
+  entities.add(melee2);
+  entities.add(ranged2);
+  entities.add(melee3);
+  entities.add(ranged3);
+  entities.add(melee4);
+  entities.add(ranged4);
+  entities.add(melee5);
+  entities.add(ranged5);
 
   inventory=false;
 }
