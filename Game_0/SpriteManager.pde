@@ -17,8 +17,8 @@ class SpriteManager
     this.loadSprites();
     sprites = new HashMap<String, PImage>();
 
-    //sprites.put("Block.Dirt", blockDirtSprite.get());
-    //sprites.put("Item.Weapon", itemWeapon.get());
+    sprites.put("Block.Dirt", blockDirtSprite.get());
+    sprites.put("Item.Weapon", itemWeapon.get());
     sprites.put("Entity.Player.Right", entityPlayerRight.get());
     sprites.put("Entity.Player.Left", entityPlayerLeft.get());
     sprites.put("Entity.Item.Melee", itemMelee.get());
@@ -36,7 +36,6 @@ class SpriteManager
     itemWeapon = loadImage("/Sprites/ItemWeapon.png");
     entityPlayerRight = loadImage("/Sprites/PlayerRight.png");
     entityPlayerLeft = loadImage("/Sprites/PlayerLeft.png");
-    blockDirtSprite = loadImage("/Sprites/Block_Dirt.png");
     itemMelee = loadImage("/Sprites/ItemMelee.png");
     itemRanged = loadImage("Sprites/ItemRanged.png");
     inventory = loadImage("/Sprites/Inventory.png");
