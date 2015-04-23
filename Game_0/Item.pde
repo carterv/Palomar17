@@ -17,7 +17,6 @@ class Item
   
   void draw()
   {
-    
   }
   
   String getModType()
@@ -53,5 +52,12 @@ class Item
   String getType()
   {
     return this.type;
+  }
+  
+  void setMods(String modType, float modValue, float modDuration)
+  {
+    this.modType=modType;
+    this.modValue=modValue;
+    this.modDuration=modDuration;
   }
 }

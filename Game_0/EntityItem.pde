@@ -8,7 +8,7 @@ class EntityItem extends Entity
     this.type="Entity.Item."+type;
     this.hitbox = new PVector(blockSize, blockSize);
     this.sprite = spriteManager.getSprite(this.type);
-    item = new Item("Attack", 1, -1, type);
+    item = new Item("Null", 0, -1, type);
   }
 
   void update()
