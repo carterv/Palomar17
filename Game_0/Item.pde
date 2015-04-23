@@ -1,21 +1,22 @@
-abstract class Item{
-  
+class Item
+{
   String modType;
   float modValue;
   float modDuration;
   String type;
+  PImage sprite;
   
-  Item(String modType, float modValue, float modDuration)
+  Item(String modType, float modValue, float modDuration, String type)
   {
     this.modType=modType;
     this.modValue=modValue;
     this.modDuration=modDuration;
-    this.type="Item.Null";
+    this.type="Item."+type;
+    sprite = spriteManager.getSprite(type);
   }
   
   void draw()
   {
-    
   }
   
   String getModType()
@@ -51,5 +52,12 @@ abstract class Item{
   String getType()
   {
     return this.type;
+  }
+  
+  void setMods(String modType, float modValue, float modDuration)
+  {
+    this.modType=modType;
+    this.modValue=modValue;
+    this.modDuration=modDuration;
   }
 }
