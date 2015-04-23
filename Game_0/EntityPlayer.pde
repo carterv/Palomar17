@@ -2,6 +2,10 @@ class EntityPlayer extends Entity
 {
   Item[] inventoryItems;
   boolean onGround;
+  boolean selected;
+  int selectW, selectH;
+  int selectedItemIndex, selectedItemIndex2;
+
 
   EntityPlayer(PVector position)
   {
@@ -10,6 +14,11 @@ class EntityPlayer extends Entity
     this.hitbox = new PVector(blockSize, 2*blockSize);
     this.sprite = spriteManager.getSprite(type);
     this.onGround = true;
+    this.selected = false;
+    this.selectW=0;
+    this.selectH=0;
+    selectedItemIndex=0;
+    selectedItemIndex2=0;
     inventoryItems = new Item[8];
   }
 
@@ -37,14 +46,52 @@ class EntityPlayer extends Entity
     int w=60;
     int h=30;
     int row=0;
+
+    image(spriteManager.getSprite("Inventory"), width/5, height/2);
+    for (Item i : inventoryItems)
+    {
+      if (i!=null)
+      {
+        image(spriteManager.getSprite(i.type, 50), width/5+w, height/2+h);
+      }      
+      w+=145;
+      row++;
+      if (row==4)
+      {
+        w=60;
+        h+=90;
+      }
+    }
+    if (selected)
+    {
+      image(spriteManager.getSprite("SelectedItem"), width/5+selectW-40, height/2+selectH-10);
+    }
+  }
+
+  void selectItem()
+  {
+    int w=60;
+    int h=30;
+    int row=0;
+
     if (inventory)
     {
-      image(spriteManager.getSprite("Inventory"), width/5, height/2);
-      for (Item i : inventoryItems)
+      for (int i=0; i<inventoryItems.length; i++)
       {
-        if (i!=null)
+        if (mouseX>width/5+w-40 && mouseX<width/5+w+85 && mouseY>height/2+h-10 && mouseY<height/2+h+60)
         {
-          image(spriteManager.getSprite(i.type, 50), width/5+w, height/2+h);
+          if (!selected)
+          {
+            selected=true;
+            selectW=w;
+            selectH=h;
+            selectedItemIndex = i;
+          } else
+          {
+            selectedItemIndex2 = i;
+            selected=false;
+            switchItems(selectedItemIndex, selectedItemIndex2);
+          }
         }
         w+=145;
         row++;
@@ -60,6 +107,13 @@ class EntityPlayer extends Entity
   void addItem(int index, Item item)
   {
     inventoryItems[index]=item;
+  }
+
+  void switchItems(int index, int index2)
+  {
+    Item temp = inventoryItems[index2];
+    inventoryItems[index2]=inventoryItems[index];
+    inventoryItems[index]=temp;
   }
 
   int emptyInventorySlot()

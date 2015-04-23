@@ -6,6 +6,7 @@ class SpriteManager
   PImage itemMelee;
   PImage itemRanged;
   PImage inventory;
+  PImage selectedItem;
   PImage entityPlayer;
 
   SpriteManager()
@@ -19,6 +20,7 @@ class SpriteManager
     sprites.put("Entity.Item.Ranged", itemRanged.get());
     sprites.put("Item.Ranged", itemRanged.get());
     sprites.put("Inventory", inventory.get());
+    sprites.put("SelectedItem", selectedItem.get());
     sprites.put("Entity.Player", entityPlayer.get());
   }
 
@@ -28,6 +30,7 @@ class SpriteManager
     itemMelee = loadImage("/Sprites/ItemMelee.png");
     itemRanged = loadImage("Sprites/ItemRanged.png");
     inventory = loadImage("/Sprites/Inventory.png");
+    selectedItem = loadImage("/Sprites/SelectedItem.png");
     entityPlayer = loadImage("/Sprites/charactertemplate2.png");
   }
 
