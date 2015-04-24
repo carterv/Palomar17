@@ -7,7 +7,8 @@ abstract class Entity
   String type;
   boolean collidable;
   PImage sprite;
-  
+  boolean alive;
+
   Entity(PVector position)
   {
     this.position = position;
@@ -16,8 +17,9 @@ abstract class Entity
     this.velocity = new PVector();
     this.acceleration = new PVector(0, 0.5);
     this.collidable = true;
+    this.alive=true;
   }
-  
+
   void update()
   {
     //TODO: implement life/isAlive. Code should go at the start of update()
@@ -115,7 +117,7 @@ abstract class Entity
       if (velocity.y > 10) velocity.y = 10;
     }
   }
-  
+
   void draw()
   {
     if (sprite != null)
@@ -130,34 +132,40 @@ abstract class Entity
   {
      this.sprite = spriteManager.getSprite(type + "." + spriteType);
   }
-  
+
   PVector getVelocity()
   {
     return this.velocity;
   }
-  
+
   void setVelocity(PVector velocity)
   {
     this.velocity = velocity;
   }
-  
+
   PVector getPosition()
   {
     return this.position;
   }
-  
+
   void setPosition(PVector position)
   {
     this.position = position;
   }
-  
+
   PVector getHitbox()
   {
     return this.hitbox;
   }
-  
+
   String getType()
   {
     return this.type;
   }
+
+  boolean isAlive()
+  {
+    return alive;
+  }
 }
+

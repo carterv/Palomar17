@@ -1,9 +1,13 @@
 int blockSize;
 SpriteManager spriteManager;
-ArrayList<Entity> entities;
 Block[][] blocks;
 EntityPlayer player;
 Table map;
+
+ArrayList<Entity> entities;
+final float MOVESPEED = 3.5;
+boolean inventory;
+boolean mousePress;
 
 //input variables
 boolean jump;
@@ -11,14 +15,14 @@ int keyDown;
 
 void setup()
 {
-  size(1000,600);
+  size(1000, 600);
   background(0);
-  
+
   blockSize = 20;
-  
+
   map = loadTable("testmap.csv");
-  
   spriteManager = new SpriteManager();
+  EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
   blocks = new Block[map.getColumnCount()][map.getRowCount()];
   
@@ -30,22 +34,44 @@ void setup()
   player = new EntityPlayer(new PVector(width/2, height/2));
   entities.add(player);
   fillBlocks();
+
+  entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
+  entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
+
+
+  inventory=false;
 }
 
 void draw()
 {
-  background(255);
+  if (!inventory)
+  {
+    background(255);
+
+    ArrayList<Entity> removal = new ArrayList<Entity>();
+    for (Entity e : entities)
+    {
+      e.draw();
+      e.update();
+
+      if (!e.isAlive())
+      {
+        removal.add(e);
+      }
+    }
+
+    for (Entity r : removal)
+    {
+      entities.remove(r);
+    }
+
+    renderBlocks();
+  } else
+  {
+    getPlayer().inventory();
+  }
   
   doInput();
-  
-  for (Entity e : entities)
-  {
-    e.draw();
-    e.update();
-    
-    //add entity removal code here
-  }
-  renderBlocks();
 }
 
 void keyPressed()
@@ -53,13 +79,16 @@ void keyPressed()
   if (key == 'a' || key == 'A') keyDown = 1;
   else if (key == 'w' || key == 'W') jump = true;
   else if (key == 'd' || key == 'D') keyDown = 2;
+  else if (key == 'i') inventory = !inventory;
+  else if (key == '1') entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
+  else if (key == '2') entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
 }
 
 void keyReleased()
 {
   if ((key == 'a' || key == 'A') && keyDown == 1) keyDown = 0;
   else if (key == 'w' || key == 'W') jump = false;
-  else if((key == 'd' || key == 'D') && keyDown == 2) keyDown = 0; 
+  else if((key == 'd' || key == 'D') && keyDown == 2) keyDown = 0;
 }
 
 void doInput()
@@ -108,11 +137,43 @@ void renderBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-      if(blocks[i][j] != null)
+      if (blocks[i][j] != null)
       {
         blocks[i][j].draw();
       }
     }
   }
+}
+
+void mousePressed()
+{
+  mousePress=true;
+}
+
+void mouseReleased()
+{
+  mousePress=false;
+}
+
+void mouseClicked()
+{
+  if (mouseButton==LEFT)
+  {
+    getPlayer().selectItem();
+  }
+}
+
+
+EntityPlayer getPlayer()
+{
+  EntityPlayer returnVal=null;
+  for (Entity e : entities)
+  {
+    if (e instanceof EntityPlayer)
+    {
+      returnVal = (EntityPlayer)e;
+    }
+  }
+  return returnVal;
 }
 

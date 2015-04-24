@@ -5,6 +5,6 @@
     super(position, id);
     
     type = "Block.Dirt";
-    sprite = spriteManager.getSprite(type, blockSize);
+    sprite = spriteManager.getSprite(type);
   }
 }*/
