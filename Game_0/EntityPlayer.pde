@@ -135,5 +135,9 @@ class EntityPlayer extends Entity
          || (blocks[i0][j2] != null)
          || (blocks[i1][j2] != null));
   }
+  
+  void collide(Entity other)
+  {
+  }
 }
 

@@ -127,6 +127,23 @@ abstract class Entity
   }
   
   abstract boolean collidedWithBlock();
+  abstract void collide(Entity other);
+  
+  boolean collidedWithEntity(Entity other)
+  {
+    float x0 = this.position.x;
+    float x1 = other.position.x;
+    float y0 = this.position.y;
+    float y1 = other.position.y;
+    float w0 = this.hitbox.x+x0;
+    float w1 = other.hitbox.x+x1;
+    float h0 = this.hitbox.y+y0;
+    float h1 = other.hitbox.y+y1;
+    return (((x1 >= x0 && x1 <= w0) && ((y1 >= y0 && y1 <= h0) || (y1 >= y0 && y1 <= h0)))
+         || ((w1 >= x0 && w1 <= w0) && ((y1 >= y0 && y1 <= h0) || (y1 >= y0 && y1 <= h0)))
+         || ((x0 >= x1 && x0 <= w1) && ((y0 >= y1 && y0 <= h1) || (y0 >= y1 && y0 <= h1)))
+         ||  ((w0 >= x1 && w0 <= w1) && ((y0 >= y1 && y0 <= h1) || (y0 >= y1 && y0 <= h1))));
+  }
   
   void setSprite(String spriteType)
   {

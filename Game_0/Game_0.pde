@@ -58,8 +58,21 @@ void draw()
       {
         removal.add(e);
       }
+      else
+      {
+        int i = entities.indexOf(e) + 1;
+        for (; i < entities.size(); i++)
+        {
+          Entity e1 = entities.get(i);
+          if (e.collidedWithEntity(e1) && e1.isAlive())
+          {
+            e.collide(e1);
+            e1.collide(e);
+          }
+        }
+      }
     }
-
+    
     for (Entity r : removal)
     {
       entities.remove(r);
