@@ -90,21 +90,30 @@ void draw()
     int realX = (int)(player.position.x - offset.x);
     int realY = (int)(player.position.y - offset.y);
     
-    if (player.position.x > width/3 && player.position.x < blocks.length*blockSize - width/3)
-    {
-      if (realX < width/3) offset.x -= width/3 - realX;
-      else if (realX > 2*width/3) offset.x -= 2*width/3 - realX;
-    }
-    else if (player.position.x <= width/3) offset.x = 0;
-    else if (player.position.x >= blocks.length*blockSize - width/3) offset.x = blocks.length*blockSize - width;
+    int o = 0;
     
-    if (player.position.y > height/3 && player.position.y < blocks[0].length*blockSize - width/3)
-    {
-      if (realY < height/3) offset.y -= height/3 - realY;
-      else if (realY > 2*height/3) offset.y -= 2*height/3 - realY;
-    }
-    else if (player.position.y <= height/3) offset.y = 0;
-    else if (player.position.y >= blocks[0].length*blockSize - height/3) offset.y = blocks[0].length*blockSize - height;
+    if (realX < width/3) o = width/3 - realX;
+    else if (realX > 2*width/3) o = 2*width/3 - realX;
+    
+    if (o > 10) offset.x -= 10;
+    else if (o < -10) offset.x -= -10;
+    else offset.x -= o;
+    
+    if (offset.x < 0) offset.x = 0;
+    else if (offset.x > blocks.length*blockSize - width) offset.x = blocks.length*blockSize - width;
+    
+    o = 0;
+    
+    if (realY < height/3) o = height/3 - realY;
+    else if (realY > 2*height/3) o = 2*height/3 - realY;
+    
+    if (o > 10) offset.y -= 10;
+    else if (o < -10) offset.y -= -10;
+    else offset.y -= o;
+    
+    if (offset.y < 0) offset.y = 0;
+    else if (offset.y > blocks[0].length*blockSize - height) offset.y = blocks[0].length*blockSize - height;
+    
   } else
   {
     getPlayer().inventory();
