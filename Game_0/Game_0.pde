@@ -8,6 +8,7 @@ ArrayList<Entity> entities;
 final float MOVESPEED = 3.5;
 boolean inventory;
 boolean mousePress;
+PVector offset;
 
 //input variables
 boolean jump;
@@ -25,6 +26,7 @@ void setup()
   EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
   blocks = new Block[map.getColumnCount()][map.getRowCount()];
+  offset = new PVector(0,0);
   
   //input variables
   jump = false;
@@ -47,7 +49,10 @@ void draw()
   if (!inventory)
   {
     background(255);
-
+    
+    pushMatrix();
+    translate(-offset.x, -offset.y);
+    
     ArrayList<Entity> removal = new ArrayList<Entity>();
     for (Entity e : entities)
     {
@@ -77,8 +82,29 @@ void draw()
     {
       entities.remove(r);
     }
-
+    
     renderBlocks();
+    
+    popMatrix();
+    
+    int realX = (int)(player.position.x - offset.x);
+    int realY = (int)(player.position.y - offset.y);
+    
+    if (player.position.x > width/3 && player.position.x < blocks.length*blockSize - width/3)
+    {
+      if (realX < width/3) offset.x -= width/3 - realX;
+      else if (realX > 2*width/3) offset.x -= 2*width/3 - realX;
+    }
+    else if (player.position.x <= width/3) offset.x = 0;
+    else if (player.position.x >= blocks.length*blockSize - width/3) offset.x = blocks.length*blockSize - width;
+    
+    if (player.position.y > height/3 && player.position.y < blocks[0].length*blockSize - width/3)
+    {
+      if (realY < height/3) offset.y -= height/3 - realY;
+      else if (realY > 2*height/3) offset.y -= 2*height/3 - realY;
+    }
+    else if (player.position.y <= height/3) offset.y = 0;
+    else if (player.position.y >= blocks[0].length*blockSize - height/3) offset.y = blocks[0].length*blockSize - height;
   } else
   {
     getPlayer().inventory();
