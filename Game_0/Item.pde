@@ -12,7 +12,7 @@ class Item
     this.modValue=modValue;
     this.modDuration=modDuration;
     this.type="Item."+type;
-    sprite = spriteManager.getSprite(type);
+    sprite = spriteManager.getSprite(this.type);
   }
   
   void draw()
