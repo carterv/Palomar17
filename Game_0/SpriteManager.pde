@@ -12,7 +12,7 @@ class SpriteManager
     this.loadSprites();
     sprites = new HashMap<String, PImage>();
     
-    sprites.put("Block.Dirt", blockDirtSprite.get());
+    sprites.put("Block.1", blockDirtSprite.get());
     sprites.put("Item.Weapon", itemWeapon.get());
     sprites.put("Entity.Player.Right", entityPlayerRight.get());
     sprites.put("Entity.Player.Left", entityPlayerLeft.get());

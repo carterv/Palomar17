@@ -8,6 +8,13 @@ class EntityPlayer extends Entity
     this.sprite = spriteManager.getSprite(type + ".Right");
   }
   
+  void update()
+  {
+    super.update();
+    if (keyDown == 1) this.setSprite("Left");
+    else if (keyDown == 2) this.setSprite("Right");
+  }
+  
   boolean collidedWithBlock()
   {
     int i0 = (int)(position.x/blockSize);
@@ -24,5 +31,4 @@ class EntityPlayer extends Entity
          || (blocks[i0][j2] != null)
          || (blocks[i1][j2] != null));
   }
-  
 }

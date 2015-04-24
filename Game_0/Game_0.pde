@@ -3,6 +3,7 @@ SpriteManager spriteManager;
 ArrayList<Entity> entities;
 Block[][] blocks;
 EntityPlayer player;
+Table map;
 
 //input variables
 boolean jump;
@@ -15,9 +16,11 @@ void setup()
   
   blockSize = 20;
   
+  map = loadTable("testmap.csv");
+  
   spriteManager = new SpriteManager();
   entities = new ArrayList<Entity>();
-  blocks = new Block[(width/blockSize)+1][height/blockSize];
+  blocks = new Block[map.getColumnCount()][map.getRowCount()];
   
   //input variables
   jump = false;
@@ -64,12 +67,10 @@ void doInput()
   if (keyDown == 1) 
   {
      player.setVelocity(new PVector(-3, player.getVelocity().y));
-     player.setSprite("Left");
   }
   else if (keyDown == 2) 
   {
     player.setVelocity(new PVector(3, player.getVelocity().y));
-    player.setSprite("Right");
   }
   
   if (jump)
@@ -91,9 +92,10 @@ void fillBlocks()
   {
     for (int j = 0; j < blocks[i].length; j++)
     {
-      if (j > 25)
+      int blockID = map.getInt(j, i);
+      if (blockID != 0)
       {
-        blocks[i][j] = new BlockDirt(new PVector((i-1)*blockSize, j*blockSize));
+        blocks[i][j] = new Block(new PVector(i*blockSize, j*blockSize), blockID);
         blocks[i][j].draw();
       }
     }

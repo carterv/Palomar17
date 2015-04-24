@@ -1,13 +1,16 @@
-abstract class Block
+class Block
 {
   PVector position;
   String type;
   PImage sprite;
+  int id;
   
-  Block(PVector position)
+  Block(PVector position, int id)
   {
     this.position = position;
-    this.type = "Block.Null";
+    this.type = "Block." + id;
+    this.id = id;
+    sprite = spriteManager.getSprite("Block." + id);
   }
   
   void update()
