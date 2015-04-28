@@ -128,8 +128,8 @@ void keyPressed()
   else if (key == 'w' || key == 'W') jump = true;
   else if (key == 'd' || key == 'D') keyDown = 2;
   else if (key == 'i') inventory = !inventory;
-  else if (key == '1') entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
-  else if (key == '2') entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
+  else if (key == '1') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Melee"));
+  else if (key == '2') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Ranged"));
 }
 
 void keyReleased()
