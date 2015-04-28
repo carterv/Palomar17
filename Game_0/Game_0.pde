@@ -130,6 +130,7 @@ void keyPressed()
   else if (key == 'i') inventory = !inventory;
   else if (key == '1') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Melee"));
   else if (key == '2') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Ranged"));
+  else if (key == '3') entities.add(new EntityMob(new PVector(mouseX+offset.x, mouseY+offset.y)));
 }
 
 void keyReleased()
