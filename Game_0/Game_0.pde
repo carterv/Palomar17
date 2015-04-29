@@ -215,7 +215,7 @@ void mousePressed()
 {
   if (mouseButton==LEFT)
   {
-    PVector projectileVector = new PVector(mouseX, mouseY);
+    PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.position);
     projectiles.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 8));

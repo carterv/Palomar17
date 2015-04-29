@@ -115,7 +115,7 @@ class EntityPlayer extends Entity
   void update()
   {
     super.update();
-    if (mouseX < this.position.x) this.setSprite("Left");
+    if (mouseX < this.position.x - offset.x) this.setSprite("Left");
     else this.setSprite("Right");
   }
   
