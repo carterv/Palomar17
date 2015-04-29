@@ -65,8 +65,7 @@ void draw()
       }
       else
       {
-        int i = entities.indexOf(e) + 1;
-        for (; i < entities.size(); i++)
+        for (int i = entities.indexOf(e) + 1; i < entities.size(); i++)
         {
           Entity e1 = entities.get(i);
           if (e.collidedWithEntity(e1) && e1.isAlive())
