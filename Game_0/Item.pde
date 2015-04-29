@@ -21,43 +21,43 @@ class Item
   
   String getModType()
   {
-    return this.modType;
+    return modType;
   }
   
   void setModType(String modType)
   {
-    this.modType=modType;
+    this.modType = modType;
   }
   
   float getModValue()
   {
-    return this.modValue;
+    return modValue;
   }
   
   void setModValue(float modValue)
   {
-    this.modValue=modValue;
+    this.modValue = modValue;
   }
   
   float getModDuration()
   {
-    return this.modDuration;
+    return modDuration;
   }
   
-  void setModDuration()
+  void setModDuration(float modDuration)
   {
-    this.modDuration=modDuration;
+    this.modDuration = modDuration;
   }
   
   String getType()
   {
-    return this.type;
+    return type;
   }
   
   void setMods(String modType, float modValue, float modDuration)
   {
-    this.modType=modType;
-    this.modValue=modValue;
-    this.modDuration=modDuration;
+    this.modType = modType;
+    this.modValue = modValue;
+    this.modDuration = modDuration;
   }
 }

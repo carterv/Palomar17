@@ -8,8 +8,8 @@ class Block
   Block(PVector position, int id)
   {
     this.position = position;
-    this.type = "Block." + id;
     this.id = id;
+    type = "Block." + id;
     sprite = spriteManager.getSprite("Block." + id);
   }
   

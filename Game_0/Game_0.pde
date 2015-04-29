@@ -65,8 +65,7 @@ void draw()
       }
       else
       {
-        int i = entities.indexOf(e) + 1;
-        for (; i < entities.size(); i++)
+        for (int i = entities.indexOf(e) + 1; i < entities.size(); i++)
         {
           Entity e1 = entities.get(i);
           if (e.collidedWithEntity(e1) && e1.isAlive())
@@ -85,6 +84,7 @@ void draw()
     
     renderBlocks();
     
+    //scrolling code
     popMatrix();
     
     int realX = (int)(player.position.x - offset.x);
@@ -116,7 +116,7 @@ void draw()
     
   } else
   {
-    getPlayer().inventory();
+    player.inventory();
   }
   
   doInput();
@@ -208,21 +208,7 @@ void mouseClicked()
 {
   if (mouseButton==LEFT)
   {
-    getPlayer().selectItem();
+    player.selectItem();
   }
-}
-
-
-EntityPlayer getPlayer()
-{
-  EntityPlayer returnVal=null;
-  for (Entity e : entities)
-  {
-    if (e instanceof EntityPlayer)
-    {
-      returnVal = (EntityPlayer)e;
-    }
-  }
-  return returnVal;
 }
 
