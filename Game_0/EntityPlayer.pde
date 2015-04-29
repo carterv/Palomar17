@@ -115,8 +115,8 @@ class EntityPlayer extends Entity
   void update()
   {
     super.update();
-    if (keyDown == 1) this.setSprite("Left");
-    else if (keyDown == 2) this.setSprite("Right");
+    if (mouseX < this.position.x) this.setSprite("Left");
+    else this.setSprite("Right");
   }
   
   boolean collidedWithBlock()
