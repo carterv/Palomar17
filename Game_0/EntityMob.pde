@@ -55,9 +55,11 @@ class EntityMob extends Entity
   {
     if (other instanceof EntityPlayer)
     {
-      /*float i = position.x - other.position.x;
-      i = i/abs(i);
-      other.velocity.x = i*5;*/
+      float i = (other.getCenter().x) - (getCenter().x);
+      i = i/abs(i == 0 ? 1 : i);
+      other.velocity.x = i*8;
+      other.velocity.y = -5;
+      keyDown = 0;
     }
   }
 }

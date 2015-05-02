@@ -174,6 +174,11 @@ abstract class Entity
   {
     return this.hitbox;
   }
+  
+  PVector getCenter()
+  {
+    return new PVector(this.position.x+this.hitbox.x/2, this.position.y+this.hitbox.y/2);
+  }
 
   String getType()
   {
