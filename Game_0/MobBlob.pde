@@ -1,12 +1,12 @@
-class EntityMob extends Entity
+class EnemyBlob extends Entity
 {
   int timer;
   int movespeed;
   
-  EntityMob(PVector position)
+  EnemyBlob(PVector position)
   {
     super(position);
-    type = "Entity.Mob";
+    type = "Enemy.Blob";
     sprite = spriteManager.getSprite(type);
     timer = 0;
     movespeed = 0;
@@ -43,7 +43,6 @@ class EntityMob extends Entity
     int i1 = (int)((position.x + hitbox.x - 1)/blockSize);
     int j0 = (int)(position.y/blockSize);
     int j1 = (int)((position.y + hitbox.y - 1)/blockSize);
-    //if (position.x < 0 || position.y < 0 || position.x + hitbox.x >= width || position.y + hitbox.y >= height) return true;
     if (i1 >= blocks.length || j1 >= blocks.length) return true;
     return ((blocks[i0][j0] != null)
          || (blocks[i1][j0] != null)
