@@ -12,12 +12,12 @@ abstract class Entity
   Entity(PVector position)
   {
     this.position = position;
-    this.type = "Entity.Null";
-    this.hitbox = new PVector(blockSize, blockSize);
-    this.velocity = new PVector();
-    this.acceleration = new PVector(0, 0.5);
-    this.collidable = true;
-    this.alive=true;
+    type = "Entity.Null";
+    hitbox = new PVector(blockSize, blockSize);
+    velocity = new PVector();
+    acceleration = new PVector(0, 0.5);
+    collidable = true;
+    alive = true;
   }
 
   void update()
@@ -173,6 +173,11 @@ abstract class Entity
   PVector getHitbox()
   {
     return this.hitbox;
+  }
+  
+  PVector getCenter()
+  {
+    return new PVector(this.position.x+this.hitbox.x/2, this.position.y+this.hitbox.y/2);
   }
 
   String getType()

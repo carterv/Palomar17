@@ -68,8 +68,7 @@ void draw()
       }
       else
       {
-        int i = entities.indexOf(e) + 1;
-        for (; i < entities.size(); i++)
+        for (int i = entities.indexOf(e) + 1; i < entities.size(); i++)
         {
           Entity e1 = entities.get(i);
           if (e.collidedWithEntity(e1) && e1.isAlive())
@@ -103,6 +102,7 @@ void draw()
     
     renderBlocks();
     
+    //scrolling code
     popMatrix();
     
     int realX = (int)(player.position.x - offset.x);
@@ -134,7 +134,7 @@ void draw()
     
   } else
   {
-    getPlayer().inventory();
+    player.inventory();
   }
   
   doInput();
@@ -146,8 +146,9 @@ void keyPressed()
   else if (key == 'w' || key == 'W') jump = true;
   else if (key == 'd' || key == 'D') keyDown = 2;
   else if (key == 'i') inventory = !inventory;
-  else if (key == '1') entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
-  else if (key == '2') entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
+  else if (key == '1') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Melee"));
+  else if (key == '2') entities.add(new EntityItem(new PVector(mouseX+offset.x, mouseY+offset.y), "Ranged"));
+  else if (key == '3') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
 }
 
 void keyReleased()
@@ -231,21 +232,7 @@ void mouseClicked()
 {
   if (mouseButton==LEFT)
   {
-    getPlayer().selectItem();
+    player.selectItem();
   }
-}
-
-
-EntityPlayer getPlayer()
-{
-  EntityPlayer returnVal=null;
-  for (Entity e : entities)
-  {
-    if (e instanceof EntityPlayer)
-    {
-      returnVal = (EntityPlayer)e;
-    }
-  }
-  return returnVal;
 }
 

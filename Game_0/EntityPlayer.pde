@@ -10,23 +10,23 @@ class EntityPlayer extends Entity
   EntityPlayer(PVector position)
   {
     super(position);
-    this.type = "Entity.Player";
-    this.hitbox = new PVector(blockSize, 2*blockSize);
-    this.sprite = spriteManager.getSprite(type + ".Right");
-    this.onGround = true;
-    this.selected = false;
-    this.selectW=0;
-    this.selectH=0;
-    selectedItemIndex=0;
-    selectedItemIndex2=0;
+    type = "Entity.Player";
+    hitbox = new PVector(blockSize, 2*blockSize);
+    sprite = spriteManager.getSprite(type + ".Right");
+    onGround = true;
+    selected = false;
+    selectW = 0;
+    selectH = 0;
+    selectedItemIndex = 0;
+    selectedItemIndex2 = 0;
     inventoryItems = new Item[8];
   }
 
   void inventory()
   {
-    int w=60;
-    int h=30;
-    int row=0;
+    int w = 60;
+    int h = 30;
+    int row = 0;
 
     image(spriteManager.getSprite("Inventory"), width/5, height/2);
     for (Item i : inventoryItems)
@@ -35,12 +35,12 @@ class EntityPlayer extends Entity
       {
         image(spriteManager.getSprite(i.type, 50), width/5+w, height/2+h);
       }      
-      w+=145;
+      w += 145;
       row++;
-      if (row==4)
+      if (row == 4)
       {
-        w=60;
-        h+=90;
+        w = 60;
+        h += 90;
       }
     }
     if (selected)
@@ -51,9 +51,9 @@ class EntityPlayer extends Entity
 
   void selectItem()
   {
-    int w=60;
-    int h=30;
-    int row=0;
+    int w = 60;
+    int h = 30;
+    int row = 0;
 
     if (inventory)
     {
@@ -63,23 +63,23 @@ class EntityPlayer extends Entity
         {
           if (!selected)
           {
-            selected=true;
-            selectW=w;
-            selectH=h;
+            selected = true;
+            selectW = w;
+            selectH = h;
             selectedItemIndex = i;
           } else
           {
             selectedItemIndex2 = i;
-            selected=false;
+            selected = false;
             switchItems(selectedItemIndex, selectedItemIndex2);
           }
         }
-        w+=145;
+        w += 145;
         row++;
-        if (row==4)
+        if (row == 4)
         {
-          w=60;
-          h+=90;
+          w = 60;
+          h += 90;
         }
       }
     }
@@ -87,25 +87,26 @@ class EntityPlayer extends Entity
 
   void addItem(int index, Item item)
   {
-    inventoryItems[index]=item;
+    if (index >= inventoryItems.length || index < 0);
+    inventoryItems[index] = item;
   }
 
   void switchItems(int index, int index2)
   {
     Item temp = inventoryItems[index2];
-    inventoryItems[index2]=inventoryItems[index];
-    inventoryItems[index]=temp;
+    inventoryItems[index2] = inventoryItems[index];
+    inventoryItems[index] = temp;
   }
 
   int emptyInventorySlot()
   {
-    int returnVal=-1;
+    int returnVal = -1;
 
     for (int i=0; i<inventoryItems.length; i++)
     {
-      if (inventoryItems[i]==null)
+      if (inventoryItems[i] == null)
       {
-        returnVal=i;
+        returnVal = i;
         break;
       }
     }
