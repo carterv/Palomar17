@@ -88,7 +88,7 @@ void draw()
     
     ArrayList<Projectile> pRemove = new ArrayList<Projectile>();
     for (Projectile p : projectiles)
-    {
+    { 
       p.draw();
       p.update();
       if (p.life <= 0)
@@ -215,10 +215,10 @@ void mousePressed()
 {
   if (mouseButton==LEFT)
   {
-    PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y);
+    PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.position);
-    projectiles.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 8));
+    projectiles.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 5));
   }
 }
 
