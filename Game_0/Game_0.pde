@@ -37,8 +37,8 @@ void setup()
   entities.add(player);
   fillBlocks();
 
-  entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
-  entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
+  entities.add(new ItemWeapon(new PVector(width/4, height/2), "Melee", "Attack", 1));
+  entities.add(new ItemWeapon(new PVector(width*3/4, height/2), "Ranged", "Attack", 1));
 
 
   inventory=false;
@@ -129,8 +129,9 @@ void keyPressed()
   else if (key == 'w' || key == 'W') jump = true;
   else if (key == 'd' || key == 'D') keyDown = 2;
   else if (key == 'i') inventory = !inventory;
-  else if (key == '1') entities.add(new EntityItem(new PVector(width/4, height/2), "Melee"));
-  else if (key == '2') entities.add(new EntityItem(new PVector(width*3/4, height/2), "Ranged"));
+  else if (key == '1') entities.add(new ItemWeapon(new PVector(width/4, height/2), "Melee", "Attack", 1));
+  else if (key == '2') entities.add(new ItemWeapon(new PVector(width*3/4, height/2), "Ranged", "Attack", 1));
+  else if (key == '3') entities.add(new ItemPotion(new PVector(width/2, height/2), "Potion", "Health", 1,1));
 }
 
 void keyReleased()
@@ -209,6 +210,7 @@ void mouseClicked()
   if (mouseButton==LEFT)
   {
     player.selectItem();
+    player.switchPage();
   }
 }
 
