@@ -199,7 +199,7 @@ void renderBlocks()
 
 void mousePressed()
 {
-  if (mouseButton==LEFT)
+  if (mouseButton==LEFT && !inventory)
   {
     PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
     projectileVector.normalize();
