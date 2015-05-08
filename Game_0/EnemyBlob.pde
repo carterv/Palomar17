@@ -60,7 +60,7 @@ class EnemyBlob extends Entity
       other.velocity.x = i*8;
       other.velocity.y = -5;
       keyDown = 0;
-      other.
+      other.damage(5);
     }
   }
 }

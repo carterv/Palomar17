@@ -17,7 +17,7 @@ class Projectile extends Entity
   
   void update()
   {
-    position.add(velocity);
+    super.update();
     life--;
     if (life == 0) alive = false;
   }
@@ -39,6 +39,10 @@ class Projectile extends Entity
   {
     if (other.getType().startsWith("Enemy."))
     {
+      float i = (other.getCenter().x) - (getCenter().x);
+      i = i/abs(i == 0 ? 1 : i);
+      other.velocity.x = i*8;
+      other.velocity.y = -5;
       other.damage(damage);
     }
   }
