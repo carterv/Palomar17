@@ -7,14 +7,15 @@ class EntityPlayer extends Entity
   int selectW, selectH;
   int selectedItemIndex, selectedItemIndex2;
   int page;
+  float attack;
 
 
   EntityPlayer(PVector position)
   {
     super(position);
     type = "Entity.Player";
-    hitbox = new PVector(blockSize, 2*blockSize);
     sprite = spriteManager.getSprite(type + ".Right");
+    hitbox = new PVector(sprite.width, sprite.height);
     onGround = true;
     selected = false;
     selectW = 0;
@@ -27,6 +28,7 @@ class EntityPlayer extends Entity
     statTypes.add("life");
     statManager = new StatManager(statTypes);
     page=0;
+    attack = 10;
   }
 
   void inventory()
@@ -198,9 +200,14 @@ class EntityPlayer extends Entity
   void update()
   {
     super.update();
-    if (keyDown == 1) setSprite("Left");
-    else if (keyDown == 2) setSprite("Right");
+    if (mouseX < this.position.x - offset.x) this.setSprite("Left");
+    else this.setSprite("Right");
     statManager.update();
+  }
+  
+  float getAttack()
+  {
+    return attack + statManager.getChange("attack");
   }
 
   boolean collidedWithBlock()

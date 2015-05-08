@@ -8,6 +8,7 @@ abstract class Entity
   boolean collidable;
   PImage sprite;
   boolean alive;
+  int life;
 
   Entity(PVector position)
   {
@@ -18,6 +19,7 @@ abstract class Entity
     acceleration = new PVector(0, 0.5);
     collidable = true;
     alive = true;
+    life = 100;
   }
 
   void update()
@@ -143,6 +145,15 @@ abstract class Entity
          || ((w1 >= x0 && w1 <= w0) && ((y1 >= y0 && y1 <= h0) || (y1 >= y0 && y1 <= h0)))
          || ((x0 >= x1 && x0 <= w1) && ((y0 >= y1 && y0 <= h1) || (y0 >= y1 && y0 <= h1)))
          ||  ((w0 >= x1 && w0 <= w1) && ((y0 >= y1 && y0 <= h1) || (y0 >= y1 && y0 <= h1))));
+  }
+  
+  void damage(float i)
+  {
+    this.life -= i;
+    if (life < 0)
+    {
+      this.alive = false;
+    }
   }
   
   void setSprite(String spriteType)
