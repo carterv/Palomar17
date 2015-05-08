@@ -1,52 +1,18 @@
 class Item
 {
-  String modType;
-  float modValue;
-  float modDuration;
   String type;
   PImage sprite;
+  ArrayList<Stat> stats;
   
-  Item(String modType, float modValue, float modDuration, String type)
+  Item(String type, ArrayList<Stat> stats)
   {
-    this.modType=modType;
-    this.modValue=modValue;
-    this.modDuration=modDuration;
     this.type="Item."+type;
+    this.stats = stats;
     sprite = spriteManager.getSprite(this.type);
   }
   
   void draw()
   {
-  }
-  
-  String getModType()
-  {
-    return modType;
-  }
-  
-  void setModType(String modType)
-  {
-    this.modType = modType;
-  }
-  
-  float getModValue()
-  {
-    return modValue;
-  }
-  
-  void setModValue(float modValue)
-  {
-    this.modValue = modValue;
-  }
-  
-  float getModDuration()
-  {
-    return modDuration;
-  }
-  
-  void setModDuration(float modDuration)
-  {
-    this.modDuration = modDuration;
   }
   
   String getType()

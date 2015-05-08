@@ -18,6 +18,7 @@ class SpriteManager
     sprites.put("SelectedItem", loadImage("/Sprites/SelectedItem.png"));
     sprites.put("Entity.Player", loadImage("/Sprites/charactertemplate2.png"));
     sprites.put("Enemy.Blob", loadImage("/Sprites/EnemyBlob.png"));
+    sprites.put("Item.Potion", loationImage("/Sprites/Potion.png"));
   }
   
   PImage getSprite(String type)
