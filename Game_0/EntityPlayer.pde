@@ -1,14 +1,15 @@
 class EntityPlayer extends Entity
 {
   Item[][] inventoryItems;
+  Item[] equippedItems;
   StatManager statManager;
   boolean onGround;
-  boolean selected;
-  int selectW, selectH;
+  boolean selected, equip;
+  float selectW, selectH;
   int selectedItemIndex, selectedItemIndex2;
   int page;
+  PImage border;
   float attack;
-
 
   EntityPlayer(PVector position)
   {
@@ -17,12 +18,15 @@ class EntityPlayer extends Entity
     sprite = spriteManager.getSprite(type + ".Right");
     hitbox = new PVector(sprite.width, sprite.height);
     onGround = true;
-    selected = false;
+    selected = equip = false;
     selectW = 0;
     selectH = 0;
     selectedItemIndex = 0;
     selectedItemIndex2 = 0;
     inventoryItems = new Item[4][8];
+    equippedItems = new Item[5];
+    page=0;
+    PImage border=null;
     ArrayList<String> statTypes = new ArrayList<String>();
     statTypes.add("attack");
     statTypes.add("life");
@@ -39,23 +43,26 @@ class EntityPlayer extends Entity
 
     //displays inventory
     image(spriteManager.getSprite("Inventory"), width/5, height/2);
-    if(page==0)
+    image(spriteManager.getSprite("Entity.Player", 125), width/2-30, height/5-20);
+    image(spriteManager.getSprite("EquipmentSlot"), width/2-35, height/25);
+    image(spriteManager.getSprite("EquipmentSlot"), width/2-120, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlot"), width/2+50, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlot"), width/2-100, height/3);
+    image(spriteManager.getSprite("EquipmentSlot"), width/2+30, height/3);
+    if (page==0)
     {
-      image(spriteManager.getSprite("InventoryTab0"), width/5-3, height/2+197);
-    }
-    else if(page==1)
+      image(spriteManager.getSprite("InventoryTab0"), width/5, height/2+197); //-3
+    } else if (page==1)
     {
-      image(spriteManager.getSprite("InventoryTab1"), width/5+146, height/2+197);
-    }
-    else if(page==2)
+      image(spriteManager.getSprite("InventoryTab1"), width/5+149, height/2+197); //-4
+    } else if (page==2)
     {
-      image(spriteManager.getSprite("InventoryTab2"), width/5+296, height/2+197);
-    }
-    else
+      image(spriteManager.getSprite("InventoryTab2"), width/5+299, height/2+197); //-4
+    } else
     {
-      image(spriteManager.getSprite("InventoryTab3"), width/5+446, height/2+197);
+      image(spriteManager.getSprite("InventoryTab3"), width/5+449, height/2+197); //-4
     }
-    
+
     //displays inventory items
     for (Item i : inventoryItems[page])
     {
@@ -72,73 +79,172 @@ class EntityPlayer extends Entity
       }
     }
 
+    if (equippedItems[0]!=null)
+    {
+      image(spriteManager.getSprite(equippedItems[0].type, 50), width/2+60, height/5);
+    }
+    if (equippedItems[1]!=null)
+    {
+      image(spriteManager.getSprite(equippedItems[1].type, 50), width/2+40, height/3+10);
+    }
+    if (equippedItems[2]!=null)
+    {
+      image(spriteManager.getSprite(equippedItems[2].type, 50), width/2-90, height/3+10);
+    }
+    if (equippedItems[3]!=null)
+    {
+      image(spriteManager.getSprite(equippedItems[3].type, 50), width/2-110, height/5);
+    }
+    if (equippedItems[4]!=null)
+    {
+      image(spriteManager.getSprite(equippedItems[4].type, 50), width/2-25, height/25+10);
+    }
+
     //displays border when selected
     if (selected)
     {
-      image(spriteManager.getSprite("SelectedItem"), width/5+selectW-40, height/2+selectH-10);
+      image(border, selectW, selectH);
     }
   }
-  
+
   void switchPage()
   {
-    if(mouseY>height/2+202 && mouseY<height/2+252)
+    if (mouseY>height/2+202 && mouseY<height/2+252)
     {
-      if(mouseX>width/5+2 && mouseX<width/5+149)
+      if (mouseX>width/5+2 && mouseX<width/5+149)
       {
         page=0;
-      }
-      else if(mouseX>width/5+151 && mouseX<width/5+299)
+        selected=false;
+      } else if (mouseX>width/5+151 && mouseX<width/5+299)
       {
         page=1;
-      }
-      else if(mouseX>width/5+301 && mouseX<width/5+449)
+        selected=false;
+      } else if (mouseX>width/5+301 && mouseX<width/5+449)
       {
         page=2;
-      }
-      else if(mouseX>width/5+451 && mouseX<width/5+598)
+        selected=false;
+      } else if (mouseX>width/5+451 && mouseX<width/5+598)
       {
         page=3;
+        selected=false;
       }
     }
   }
 
-  void selectItem()
+  void equipItem(int index)
+  {
+    Item temp = inventoryItems[page][index];
+    if (page==0)
+    {
+      inventoryItems[page][index]=equippedItems[0];
+      equippedItems[0]=temp;
+    } else if (page==1)
+    {
+      if (inventoryItems[page][index].getType().startsWith("Item.Armor.Boots"))
+      {
+        inventoryItems[page][index]=equippedItems[1];
+        equippedItems[1]=temp;
+      } else if (inventoryItems[page][index].getType().startsWith("Item.Armor.Legs"))
+      {
+        inventoryItems[page][index]=equippedItems[2];
+        equippedItems[2]=temp;
+      } else if (inventoryItems[page][index].getType().startsWith("Item.Armor.Chest"))
+      {
+        inventoryItems[page][index]=equippedItems[3];
+        equippedItems[3]=temp;
+      } else if (inventoryItems[page][index].getType().startsWith("Item.Armor.Helmet"))
+      {
+        inventoryItems[page][index]=equippedItems[4];
+        equippedItems[4]=temp;
+      }
+    }
+  }
+
+  void unequip(int index)
+  {
+    if (equippedItems[index]!=null)
+    {
+      int slot = emptyInventorySlot(seperateInventory(equippedItems[index]));
+      if (slot!=-1)
+      {
+        addItem(slot, equippedItems[index]);
+        equippedItems[index]=null;
+      }
+    }
+  }
+
+  void selectItem(boolean left)
   {
     int w = 60;
     int h = 30;
     int row = 0;
 
-    if (inventory)
+    for (int i=0; i<inventoryItems[page].length; i++)
     {
-      for (int i=0; i<inventoryItems[page].length; i++)
+      if (mouseX>width/5+w-40 && mouseX<width/5+w+85 && mouseY>height/2+h-10 && mouseY<height/2+h+60)
       {
-        if (mouseX>width/5+w-40 && mouseX<width/5+w+85 && mouseY>height/2+h-10 && mouseY<height/2+h+60)
+        if (left==true)
         {
           if (!selected)
           {
             selected = true;
-            selectW = w;
-            selectH = h;
+            selectW = width/5+w-40;
+            selectH = height/2+h-10;
             selectedItemIndex = i;
-          }
-          else
+            border=spriteManager.getSprite("SelectedItem");
+          } else if(!equip)
           {
             selectedItemIndex2 = i;
             selected = false;
             switchItems(selectedItemIndex, selectedItemIndex2);
+          } else
+          {
+            selected=equip=false;
+            switchEquipment(selectedItemIndex, i);
           }
-        }
-        w += 145;
-        row++;
-        if (row == 4)
+        } else
         {
-          w = 60;
-          h += 90;
+          equipItem(i);
         }
       }
+
+      w += 145;
+      row++;
+      if (row == 4)
+      {
+        w = 60;
+        h += 90;
+      }
+    }
+    for (int i=0; i<equippedItems.length; i++)
+    {
+      PVector[] coord = {
+        new PVector(550, 110), new PVector(530, 200), new PVector(400, 200), new PVector(380, 110), new PVector(465, 24)
+        };
+        if (mouseX>coord[i].x && mouseX<coord[i].x+70 && mouseY>coord[i].y && mouseY<coord[i].y+70)
+        {
+          if (left==true)
+          {
+            if (!selected)
+            {
+              selected=equip=true; 
+              selectW=coord[i].x; 
+              selectH=coord[i].y;
+              selectedItemIndex = i;
+              border=spriteManager.getSprite("SelectedEquipment");
+            } else
+            {
+              selected=equip=false;
+              switchEquipment(i, selectedItemIndex);
+            }
+          } else
+          {
+            unequip(i);
+          }
+        }
     }
   }
-  
+
   int seperateInventory(Item item)
   {
     int tab=3;
@@ -156,10 +262,10 @@ class EntityPlayer extends Entity
     }
     return tab;
   }
-  
+
   void addItem(int index, Item item)
   {
-    if (index >= inventoryItems[seperateInventory(item)].length || index < 0) return;  
+    if (index >= inventoryItems[seperateInventory(item)].length || index < 0) return; 
     inventoryItems[seperateInventory(item)][index] = item;
     if (index == 0) statManager.addStat(item.stat);
   }
@@ -182,15 +288,29 @@ class EntityPlayer extends Entity
     }
   }
 
+  void switchEquipment(int index, int index2)
+  {
+    Item temp = inventoryItems[page][index2];
+    if (page==0 && index==0)
+    {
+      inventoryItems[page][index2]=equippedItems[index];
+      equippedItems[index]=temp;
+    } else if (page==1 && index!=0)
+    {
+      inventoryItems[page][index2]=equippedItems[index];
+      equippedItems[index]=temp;
+    }
+  }
+
   int emptyInventorySlot(int i)
   {
-    int returnVal = -1;
+    int returnVal = -1; 
 
-    for (int j=0; j<inventoryItems[page ].length; j++)
+    for (int j=0; j<inventoryItems[i].length; j++)
     {
       if (inventoryItems[i][j] == null)
       {
-        returnVal = j;
+        returnVal = j; 
         break;
       }
     }
@@ -212,13 +332,13 @@ class EntityPlayer extends Entity
 
   boolean collidedWithBlock()
   {
-    int i0 = (int)(position.x/blockSize);
-    int i1 = (int)((position.x + hitbox.x - 1)/blockSize);
-    int j0 = (int)(position.y/blockSize);
-    int j1 = (int)((position.y + hitbox.y/2 - 1)/blockSize);
-    int j2 = (int)((position.y + hitbox.y - 1)/blockSize);
+    int i0 = (int)(position.x/blockSize); 
+    int i1 = (int)((position.x + hitbox.x - 1)/blockSize); 
+    int j0 = (int)(position.y/blockSize); 
+    int j1 = (int)((position.y + hitbox.y/2 - 1)/blockSize); 
+    int j2 = (int)((position.y + hitbox.y - 1)/blockSize); 
     //if (position.x < 0 || position.y < 0 || position.x + hitbox.x >= width || position.y + hitbox.y >= height) return true;
-    if (i1 >= blocks.length || j2 >= blocks.length) return true;
+    if (i1 >= blocks.length || j2 >= blocks.length) return true; 
     return ((blocks[i0][j0] != null)
       || (blocks[i1][j0] != null)
       || (blocks[i0][j1] != null)
@@ -229,6 +349,11 @@ class EntityPlayer extends Entity
 
   void collide(Entity other)
   {
+  }
+
+  void setSelect(boolean set)
+  {
+    selected=set;
   }
 }
 

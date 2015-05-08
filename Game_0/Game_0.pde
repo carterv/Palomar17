@@ -29,19 +29,19 @@ void setup()
   EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
   blocks = new Block[map.getColumnCount()][map.getRowCount()];
-  offset = new PVector(0,0);
-  
+  offset = new PVector(0, 0);
+
   //input variables
   jump = false;
   keyDown = 0;
-  
+
   //for now
   player = new EntityPlayer(new PVector(width/2, height/2));
   entities.add(player);
   fillBlocks();
 
-  entities.add(new Item(new PVector(width/4, height/2), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
-  entities.add(new Item(new PVector(width*3/4, height/2), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
+  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
+  entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
 
   inventory=false;
 }
@@ -51,10 +51,10 @@ void draw()
   if (!inventory)
   {
     background(255);
-    
+
     pushMatrix();
     translate(-offset.x, -offset.y);
-    
+
     ArrayList<Entity> removal = new ArrayList<Entity>();
     for (Entity e : entities)
     {
@@ -64,8 +64,7 @@ void draw()
       if (!e.isAlive())
       {
         removal.add(e);
-      }
-      else
+      } else
       {
         for (int i = entities.indexOf(e) + 1; i < entities.size(); i++)
         {
@@ -78,49 +77,48 @@ void draw()
         }
       }
     }
-    
+
     for (Entity r : removal)
     {
       entities.remove(r);
     }
-    
+
     renderBlocks();
-    
+
     //scrolling code
     popMatrix();
-    
+
     int realX = (int)(player.position.x - offset.x);
     int realY = (int)(player.position.y - offset.y);
-    
+
     int o = 0;
-    
+
     if (realX < width/3) o = width/3 - realX;
     else if (realX > 2*width/3) o = 2*width/3 - realX;
-    
+
     if (o > 10) offset.x -= 10;
     else if (o < -10) offset.x -= -10;
     else offset.x -= o;
-    
+
     if (offset.x < 0) offset.x = 0;
     else if (offset.x > blocks.length*blockSize - width) offset.x = blocks.length*blockSize - width;
-    
+
     o = 0;
-    
+
     if (realY < height/3) o = height/3 - realY;
     else if (realY > 2*height/3) o = 2*height/3 - realY;
-    
+
     if (o > 10) offset.y -= 10;
     else if (o < -10) offset.y -= -10;
     else offset.y -= o;
-    
+
     if (offset.y < 0) offset.y = 0;
     else if (offset.y > blocks[0].length*blockSize - height) offset.y = blocks[0].length*blockSize - height;
-    
   } else
   {
     player.inventory();
   }
-  
+
   doInput();
 }
 
@@ -129,7 +127,11 @@ void keyPressed()
   if (key == 'a' || key == 'A') keyDown = 1;
   else if (key == 'w' || key == 'W') jump = true;
   else if (key == 'd' || key == 'D') keyDown = 2;
-  else if (key == 'i') inventory = !inventory;
+  else if (key == 'i')
+  {
+    inventory = !inventory;
+    player.setSelect(false);
+  }
   else if (key == '1') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
   else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
   else if (key == '3') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Consumable.Potion", new Stat("life", "Heal", 1, -1)));
@@ -140,29 +142,28 @@ void keyReleased()
 {
   if ((key == 'a' || key == 'A') && keyDown == 1) keyDown = 0;
   else if (key == 'w' || key == 'W') jump = false;
-  else if((key == 'd' || key == 'D') && keyDown == 2) keyDown = 0;
+  else if ((key == 'd' || key == 'D') && keyDown == 2) keyDown = 0;
 }
 
 void doInput()
 {
   if (keyDown == 1) 
   {
-     player.setVelocity(new PVector(-3, player.getVelocity().y));
-  }
-  else if (keyDown == 2) 
+    player.setVelocity(new PVector(-3, player.getVelocity().y));
+  } else if (keyDown == 2) 
   {
     player.setVelocity(new PVector(3, player.getVelocity().y));
   }
-  
+
   if (jump)
   {
     //get player position
     int px = (int)(player.getPosition().x/blockSize);
     int py = (int)(player.getPosition().y/blockSize);
-    
+
     //check if at lower bound or if there is a block under the player
-    if (py+2 >= blocks[0].length || blocks[px][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x,-8));
-    else if ((px+1)*blockSize+1 < player.getPosition().x+player.getHitbox().x && px+1 < blocks.length && blocks[px+1][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x,-8));
+    if (py+2 >= blocks[0].length || blocks[px][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x, -8));
+    else if ((px+1)*blockSize+1 < player.getPosition().x+player.getHitbox().x && px+1 < blocks.length && blocks[px+1][py+2] != null) player.setVelocity(new PVector(player.getVelocity().x, -8));
   }
 }
 
@@ -199,7 +200,7 @@ void renderBlocks()
 
 void mousePressed()
 {
-  if (mouseButton==LEFT)
+  if (mouseButton==LEFT && !inventory)
   {
     PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
     projectileVector.normalize();
@@ -215,10 +216,17 @@ void mouseReleased()
 
 void mouseClicked()
 {
-  if (mouseButton==LEFT)
+  if (inventory)
   {
-    player.selectItem();
     player.switchPage();
+    if (mouseButton==LEFT)
+    {
+      player.selectItem(true);
+    }
+    if (mouseButton==RIGHT)
+    {
+      player.selectItem(false);
+    }
   }
 }
 

@@ -18,7 +18,9 @@ class SpriteManager
     sprites.put("InventoryTab2", loadImage("/Sprites/Tab2.png"));
     sprites.put("InventoryTab3", loadImage("/Sprites/Tab3.png"));
     sprites.put("SelectedItem", loadImage("/Sprites/SelectedItem.png"));
+    sprites.put("SelectedEquipment", loadImage("/Sprites/SelectedEquipment.png"));
     sprites.put("Entity.Player", loadImage("/Sprites/charactertemplate2.png"));
+    sprites.put("EquipmentSlot", loadImage("/Sprites/EquipmentSlot.png"));
     sprites.put("Projectile.Sword", loadImage("/Sprites/ProjectileSword.png"));
     sprites.put("Enemy.Blob", loadImage("/Sprites/EnemyBlob.png"));
   }
