@@ -10,6 +10,7 @@ class EnemyBlob extends Entity
     sprite = spriteManager.getSprite(type);
     timer = 0;
     movespeed = 0;
+    this.hitbox = new PVector(sprite.width, sprite.height);
   }
   
   void update()
@@ -59,6 +60,7 @@ class EnemyBlob extends Entity
       other.velocity.x = i*8;
       other.velocity.y = -5;
       keyDown = 0;
+      other.
     }
   }
 }

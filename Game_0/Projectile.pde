@@ -11,7 +11,8 @@ class Projectile extends Entity
     this.type = "Projectile." + type;
     sprite = spriteManager.getSprite("Projectile." + type);
     this.life = life;
-    this.damage= damage;
+    this.damage = damage;
+    this.hitbox = new PVector(sprite.width, sprite.height);
   }
   
   void update()
@@ -36,7 +37,7 @@ class Projectile extends Entity
   
   void collide(Entity other)
   {
-    if (other.getType().startsWith("Enemy"))
+    if (other.getType().startsWith("Enemy."))
     {
       other.damage(damage);
     }

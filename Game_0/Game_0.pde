@@ -5,7 +5,6 @@ EntityPlayer player;
 Table map;
 
 ArrayList<Entity> entities;
-ArrayList<Projectile> projectiles;
 final float MOVESPEED = 3.5;
 boolean inventory;
 boolean mousePress;
@@ -29,7 +28,6 @@ void setup()
   spriteManager = new SpriteManager();
   EntityPlayer character = new EntityPlayer(new PVector(width/2, 480));
   entities = new ArrayList<Entity>();
-  projectiles = new ArrayList<Projectile>();
   blocks = new Block[map.getColumnCount()][map.getRowCount()];
   offset = new PVector(0,0);
   
@@ -84,21 +82,6 @@ void draw()
     for (Entity r : removal)
     {
       entities.remove(r);
-    }
-    
-    ArrayList<Projectile> pRemove = new ArrayList<Projectile>();
-    for (Projectile p : projectiles)
-    { 
-      p.draw();
-      p.update();
-      if (p.life <= 0)
-      {
-        pRemove.add(p);
-      }
-    }
-    for (Projectile r : pRemove)
-    {
-      projectiles.remove(r);
     }
     
     renderBlocks();
@@ -221,7 +204,7 @@ void mousePressed()
     PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.position);
-    projectiles.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 5, player.getAttack()));
+    entities.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 5, player.getAttack()));
   }
 }
 

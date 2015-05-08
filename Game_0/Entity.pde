@@ -9,6 +9,7 @@ abstract class Entity
   PImage sprite;
   boolean alive;
   int life;
+  color dColor;
 
   Entity(PVector position)
   {
@@ -20,6 +21,7 @@ abstract class Entity
     collidable = true;
     alive = true;
     life = 100;
+    dColor = color(255,0,0,0);
   }
 
   void update()
@@ -118,6 +120,11 @@ abstract class Entity
       velocity.add(acceleration);
       if (velocity.y > 10) velocity.y = 10;
     }
+    if (alpha(dColor) > 0)
+    {
+      int a = (int)(alpha(dColor)-15 < 1 ? 0 : alpha(dColor)-15);
+      dColor = color(255,0,0,a);
+    }
   }
 
   void draw()
@@ -125,6 +132,9 @@ abstract class Entity
     if (sprite != null)
     {
       image(sprite, position.x, position.y);
+      noStroke();
+      fill(dColor);
+      rect(position.x,position.y,hitbox.x,hitbox.y);
     }
   }
   
@@ -150,6 +160,7 @@ abstract class Entity
   void damage(float i)
   {
     this.life -= i;
+    this.dColor = color(255,0,0,200);
     if (life < 0)
     {
       this.alive = false;
