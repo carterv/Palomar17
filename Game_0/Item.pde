@@ -35,5 +35,10 @@ class Item extends Entity
     player.addItem(slot, this);
     alive = false;
   }
+  
+  String getType()
+  {
+    return type;
+  }
 }
 

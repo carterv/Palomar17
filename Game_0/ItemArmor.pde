@@ -15,7 +15,7 @@ class ItemArmor extends Item
   
   public ItemArmor(PVector position, String type, String modType, double modVal, String modElem, double modElemVal)
   {
-    super(position,type);
+    super(position,"Armor."+type);
     this.modType=modType;
     this.modVal=modVal;
     this.modElem=modElem;

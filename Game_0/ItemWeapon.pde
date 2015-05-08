@@ -7,7 +7,7 @@ class ItemWeapon extends Item
   
   public ItemWeapon(PVector position, String type, String modType, double modVal)
   {
-    super(position,type);
+    super(position,"Weapon."+type);
     this.modType=modType;
     this.modVal=modVal;
     modElem="null";
