@@ -14,10 +14,13 @@ PVector offset;
 boolean jump;
 int keyDown;
 
+int timer = 0;
+
 void setup()
 {
   size(1000, 600);
   background(0);
+  cursor(CROSS);
 
   blockSize = 20;
 
@@ -37,9 +40,8 @@ void setup()
   entities.add(player);
   fillBlocks();
 
-  entities.add(new ItemWeapon(new PVector(width/4, 400), "Melee", "Attack", 1));
-  entities.add(new ItemWeapon(new PVector(width*3/4, 400), "Ranged", "Attack", 1));
-
+  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
+  entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
 
   inventory=false;
 }
@@ -64,8 +66,7 @@ void draw()
         removal.add(e);
       } else
       {
-        int i = entities.indexOf(e) + 1;
-        for (; i < entities.size (); i++)
+        for (int i = entities.indexOf(e) + 1; i < entities.size(); i++)
         {
           Entity e1 = entities.get(i);
           if (e.collidedWithEntity(e1) && e1.isAlive())
@@ -131,9 +132,10 @@ void keyPressed()
     inventory = !inventory;
     player.setSelect(false);
   }
-  else if (key == '1') entities.add(new ItemWeapon(new PVector(width/4, 400), "Melee", "Attack", 1));
-  else if (key == '2') entities.add(new ItemWeapon(new PVector(width*3/4, 400), "Ranged", "Attack", 1));
-  else if (key == '3') entities.add(new ItemPotion(new PVector(width/2, 400), "Potion", "Health", 1, 1));
+  else if (key == '1') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
+  else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
+  else if (key == '3') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Consumable.Potion", new Stat("life", "Heal", 1, -1)));
+  else if (key == '4') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
 }
 
 void keyReleased()
@@ -198,7 +200,13 @@ void renderBlocks()
 
 void mousePressed()
 {
-  mousePress=true;
+  if (mouseButton==LEFT)
+  {
+    PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
+    projectileVector.normalize();
+    PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.position);
+    entities.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 5, player.getAttack()));
+  }
 }
 
 void mouseReleased()

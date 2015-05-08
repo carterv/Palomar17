@@ -1,17 +1,14 @@
 class Item extends Entity
 {
-    
-  Item(PVector position, String type)
+  Stat stat;
+  
+  Item(PVector position, String type, Stat stat)
   {
     super(position);
     this.type="Item."+type;
+    this.stat = stat;
     hitbox = new PVector(blockSize, blockSize);
     sprite = spriteManager.getSprite(this.type);
-  }
-
-  void draw()
-  {
-    super.draw();
   }
   
   boolean collidedWithBlock()

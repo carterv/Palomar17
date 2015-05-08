@@ -2,20 +2,21 @@ class EntityPlayer extends Entity
 {
   Item[][] inventoryItems;
   Item[] equippedItems;
+  StatManager statManager;
   boolean onGround;
   boolean selected, equip;
   float selectW, selectH;
   int selectedItemIndex, selectedItemIndex2;
   int page;
   PImage border;
-
+  float attack;
 
   EntityPlayer(PVector position)
   {
     super(position);
     type = "Entity.Player";
-    hitbox = new PVector(blockSize, 2*blockSize);
     sprite = spriteManager.getSprite(type + ".Right");
+    hitbox = new PVector(sprite.width, sprite.height);
     onGround = true;
     selected = equip = false;
     selectW = 0;
@@ -26,6 +27,12 @@ class EntityPlayer extends Entity
     equippedItems = new Item[5];
     page=0;
     PImage border=null;
+    ArrayList<String> statTypes = new ArrayList<String>();
+    statTypes.add("attack");
+    statTypes.add("life");
+    statManager = new StatManager(statTypes);
+    page=0;
+    attack = 10;
   }
 
   void inventory()
@@ -240,14 +247,16 @@ class EntityPlayer extends Entity
 
   int seperateInventory(Item item)
   {
-    int tab=3; 
-    if (item.getType().startsWith("Item.Weapon"))
+    int tab=3;
+    if (item.getType().startsWith("Item.Weapon."))
     {
       tab=0;
-    } else if (item.getType().startsWith("Item.Armor"))
+    }
+    else if (item.getType().startsWith("Item.Armor."))
     {
       tab=1;
-    } else if (item.getType().startsWith("Item.Potion"))
+    }
+    else if (item.getType().startsWith("Item.Consumable."))
     {
       tab=2;
     }
@@ -258,13 +267,25 @@ class EntityPlayer extends Entity
   {
     if (index >= inventoryItems[seperateInventory(item)].length || index < 0) return; 
     inventoryItems[seperateInventory(item)][index] = item;
+    if (index == 0) statManager.addStat(item.stat);
   }
 
-  void switchItems(int index, int index2)
+  void switchItems(int index1, int index2)
   {
-    Item temp = inventoryItems[page][index2]; 
-    inventoryItems[page][index2] = inventoryItems[page][index]; 
-    inventoryItems[page][index] = temp;
+    Item i1 = inventoryItems[page][index1];
+    Item i2 = inventoryItems[page][index2];
+    inventoryItems[page][index2] = i1;
+    inventoryItems[page][index1] = i2;
+    if (index1 == 0)
+    {
+      if (i1 != null) statManager.removeStat(i1.stat);
+      if (i2 != null) statManager.addStat(i2.stat);
+    }
+    else if (index2 == 0)
+    {
+      if (i2 != null) statManager.removeStat(i2.stat);
+      if (i1 != null) statManager.addStat(i1.stat);
+    }
   }
 
   void switchEquipment(int index, int index2)
@@ -298,9 +319,15 @@ class EntityPlayer extends Entity
 
   void update()
   {
-    super.update(); 
-    if (keyDown == 1) setSprite("Left"); 
-    else if (keyDown == 2) setSprite("Right");
+    super.update();
+    if (mouseX < this.position.x - offset.x) this.setSprite("Left");
+    else this.setSprite("Right");
+    statManager.update();
+  }
+  
+  float getAttack()
+  {
+    return attack + statManager.getChange("attack");
   }
 
   boolean collidedWithBlock()
