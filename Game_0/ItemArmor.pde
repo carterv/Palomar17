@@ -4,7 +4,7 @@ class ItemArmor extends Item
   private double modVal;
   private String modElem;
   private double modElemVal;
-  d
+  
   public ItemArmor(PVector position, String type, String modType, double modVal)
   {
     super(position,type);

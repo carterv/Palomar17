@@ -4,7 +4,7 @@ class Item extends Entity
   Item(PVector position, String type)
   {
     super(position);
-    this.type="Entity.Item."+type;
+    this.type="Item."+type;
     hitbox = new PVector(blockSize, blockSize);
     sprite = spriteManager.getSprite(this.type);
   }

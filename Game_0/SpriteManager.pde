@@ -9,9 +9,9 @@ class SpriteManager
     sprites.put("Block.1", loadImage("/Sprites/BlockDirt.png"));
     sprites.put("Entity.Player.Right", loadImage("/Sprites/PlayerRight.png"));
     sprites.put("Entity.Player.Left", loadImage("/Sprites/PlayerLeft.png"));
-    sprites.put("Entity.Item.Melee", loadImage("/Sprites/ItemMelee.png"));
-    sprites.put("Entity.Item.Ranged", loadImage("Sprites/ItemRanged.png"));
-    sprites.put("Entity.Item.Potion", loadImage("/Sprites/ItemPotion.png"));
+    sprites.put("Item.Melee", loadImage("/Sprites/ItemMelee.png"));
+    sprites.put("Item.Ranged", loadImage("Sprites/ItemRanged.png"));
+    sprites.put("Item.Potion", loadImage("/Sprites/ItemPotion.png"));
     sprites.put("Inventory", loadImage("/Sprites/Inventory2.png"));
     sprites.put("InventoryTab0", loadImage("/Sprites/Tab0.png"));
     sprites.put("InventoryTab1", loadImage("/Sprites/Tab1.png"));

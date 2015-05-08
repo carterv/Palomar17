@@ -79,18 +79,22 @@ class EntityPlayer extends Entity
       if(mouseX>width/5+2 && mouseX<width/5+149)
       {
         page=0;
+        select=false;
       }
       else if(mouseX>width/5+151 && mouseX<width/5+299)
       {
         page=1;
+        select=false;
       }
       else if(mouseX>width/5+301 && mouseX<width/5+449)
       {
         page=2;
+        select=false;
       }
       else if(mouseX>width/5+451 && mouseX<width/5+598)
       {
         page=3;
+        select=false;
       }
     }
   }
