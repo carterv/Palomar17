@@ -4,34 +4,39 @@ class StatManager
 {
   HashMap<String,ArrayList<Stat>> stats;
   
-  public StatManager(ArrayList<String> statTypes)
+  StatManager(ArrayList<String> statTypes)
   {
     stats = new HashMap<String,ArrayList<Stat>>();
     for (String type : statTypes)
     {
-      stats.put(type, new ArrayList<Stat>();
+      stats.put(type, new ArrayList<Stat>());
     }
   }
   
-  public void update()
+  void update()
   {
     for (ArrayList<Stat> statList : stats.values())
     {
-      for (Stat s : stats)
+      ArrayList<Stat> removables = new ArrayList<Stat>();
+      for (Stat s : statList)
       {
         if (s.duration == 0)
         {
-          stats.remove(s);
+          removables.add(s);
         }
         else
         {
           s.duration--;
         }
       }
+      for (Stat s : removables)
+      {
+        statList.remove(s);
+      }
     }
   }
   
-  public float getChange(String type)
+  float getChange(String type)
   {
     float i = 0;
     for (Stat s : stats.get(type))
@@ -41,27 +46,20 @@ class StatManager
     return i;
   }
   
-  public void addStat(String type, Stat s)
+  void addStat(Stat s)
   {
-    stats.get(type).append(s);
+    stats.get(s.type).add(s);
   }
   
-  public boolean removeStat(String type, String title)
+  boolean removeStat(Stat s)
   {
     boolean flag = false;
-    for (String t : stats.keys())
+    for (String t : stats.keySet())
     {
-      flag = flag || t.equals(type);
+      flag = flag || t.equals(s.type);
     }
     if (!flag) return flag;
-    for (int i = 0; i < stats.get(type).size(); i++)
-    {
-      if (stats.get(type).get(i).title.equals(title))
-      {
-        stats.get(type).remove(i));
-        return true;
-      }
-    }
+    stats.get(s.type).remove(s);
     return false;
   }
 }

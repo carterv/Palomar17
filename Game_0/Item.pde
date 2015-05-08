@@ -1,29 +1,36 @@
-class Item
+class Item extends Entity
 {
-  String type;
-  PImage sprite;
-  ArrayList<Stat> stats;
+  Stat stat;
   
-  Item(String type, ArrayList<Stat> stats)
+  Item(PVector position, String type, Stat stat)
   {
+    super(position);
     this.type="Item."+type;
-    this.stats = stats;
+    this.stat = stat;
+    hitbox = new PVector(blockSize, blockSize);
     sprite = spriteManager.getSprite(this.type);
   }
   
-  void draw()
+  boolean collidedWithBlock()
   {
+    int i0 = (int)(position.x/blockSize);
+    int i1 = (int)((position.x + hitbox.x - 1)/blockSize);
+    int j0 = (int)(position.y/blockSize);
+    int j1 = (int)((position.y + hitbox.y - 1)/blockSize);
+    if (i1 >= blocks.length || j1 >= blocks.length) return true;
+    return ((blocks[i0][j0] != null)
+         || (blocks[i1][j0] != null)
+         || (blocks[i0][j1] != null)
+         || (blocks[i1][j1] != null));
   }
   
-  String getType()
+  void collide(Entity other)
   {
-    return type;
-  }
-  
-  void setMods(String modType, float modValue, float modDuration)
-  {
-    this.modType = modType;
-    this.modValue = modValue;
-    this.modDuration = modDuration;
+    if (!(other instanceof EntityPlayer)) return;
+    int slot = player.emptyInventorySlot(player.seperateInventory(this));
+    if (slot == -1) return;
+    player.addItem(slot, this);
+    alive = false;
   }
 }
+

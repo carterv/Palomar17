@@ -7,18 +7,19 @@ class SpriteManager
     sprites = new HashMap<String, PImage>();
 
     sprites.put("Block.1", loadImage("/Sprites/BlockDirt.png"));
-    sprites.put("Item.Weapon", loadImage("/Sprites/ItemWeapon.png"));
     sprites.put("Entity.Player.Right", loadImage("/Sprites/PlayerRight.png"));
     sprites.put("Entity.Player.Left", loadImage("/Sprites/PlayerLeft.png"));
-    sprites.put("Entity.Item.Melee", loadImage("/Sprites/ItemMelee.png"));
-    sprites.put("Item.Melee", loadImage("/Sprites/ItemMelee.png"));
-    sprites.put("Entity.Item.Ranged", loadImage("Sprites/ItemRanged.png"));
-    sprites.put("Item.Ranged", loadImage("Sprites/ItemRanged.png"));
-    sprites.put("Inventory", loadImage("/Sprites/Inventory.png"));
+    sprites.put("Item.Weapon.Melee", loadImage("/Sprites/ItemMelee.png"));
+    sprites.put("Item.Weapon.Ranged", loadImage("Sprites/ItemRanged.png"));
+    sprites.put("Item.Consumable.Potion", loadImage("/Sprites/ItemPotion.png"));
+    sprites.put("Inventory", loadImage("/Sprites/Inventory2.png"));
+    sprites.put("InventoryTab0", loadImage("/Sprites/Tab0.png"));
+    sprites.put("InventoryTab1", loadImage("/Sprites/Tab1.png"));
+    sprites.put("InventoryTab2", loadImage("/Sprites/Tab2.png"));
+    sprites.put("InventoryTab3", loadImage("/Sprites/Tab3.png"));
     sprites.put("SelectedItem", loadImage("/Sprites/SelectedItem.png"));
     sprites.put("Entity.Player", loadImage("/Sprites/charactertemplate2.png"));
     sprites.put("Enemy.Blob", loadImage("/Sprites/EnemyBlob.png"));
-    sprites.put("Item.Potion", loationImage("/Sprites/Potion.png"));
   }
   
   PImage getSprite(String type)
