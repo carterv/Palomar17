@@ -1,25 +1,34 @@
 class EntityPlayer extends Entity
 {
-  Item[] inventoryItems;
+  Item[][] inventoryItems;
+  StatManager statManager;
   boolean onGround;
   boolean selected;
   int selectW, selectH;
   int selectedItemIndex, selectedItemIndex2;
+  int page;
+  float attack;
 
 
   EntityPlayer(PVector position)
   {
     super(position);
     type = "Entity.Player";
-    hitbox = new PVector(blockSize, 2*blockSize);
     sprite = spriteManager.getSprite(type + ".Right");
+    hitbox = new PVector(sprite.width, sprite.height);
     onGround = true;
     selected = false;
     selectW = 0;
     selectH = 0;
     selectedItemIndex = 0;
     selectedItemIndex2 = 0;
-    inventoryItems = new Item[8];
+    inventoryItems = new Item[4][8];
+    ArrayList<String> statTypes = new ArrayList<String>();
+    statTypes.add("attack");
+    statTypes.add("life");
+    statManager = new StatManager(statTypes);
+    page=0;
+    attack = 10;
   }
 
   void inventory()
@@ -28,8 +37,27 @@ class EntityPlayer extends Entity
     int h = 30;
     int row = 0;
 
+    //displays inventory
     image(spriteManager.getSprite("Inventory"), width/5, height/2);
-    for (Item i : inventoryItems)
+    if(page==0)
+    {
+      image(spriteManager.getSprite("InventoryTab0"), width/5-3, height/2+197);
+    }
+    else if(page==1)
+    {
+      image(spriteManager.getSprite("InventoryTab1"), width/5+146, height/2+197);
+    }
+    else if(page==2)
+    {
+      image(spriteManager.getSprite("InventoryTab2"), width/5+296, height/2+197);
+    }
+    else
+    {
+      image(spriteManager.getSprite("InventoryTab3"), width/5+446, height/2+197);
+    }
+    
+    //displays inventory items
+    for (Item i : inventoryItems[page])
     {
       if (i!=null)
       {
@@ -43,9 +71,34 @@ class EntityPlayer extends Entity
         h += 90;
       }
     }
+
+    //displays border when selected
     if (selected)
     {
       image(spriteManager.getSprite("SelectedItem"), width/5+selectW-40, height/2+selectH-10);
+    }
+  }
+  
+  void switchPage()
+  {
+    if(mouseY>height/2+202 && mouseY<height/2+252)
+    {
+      if(mouseX>width/5+2 && mouseX<width/5+149)
+      {
+        page=0;
+      }
+      else if(mouseX>width/5+151 && mouseX<width/5+299)
+      {
+        page=1;
+      }
+      else if(mouseX>width/5+301 && mouseX<width/5+449)
+      {
+        page=2;
+      }
+      else if(mouseX>width/5+451 && mouseX<width/5+598)
+      {
+        page=3;
+      }
     }
   }
 
@@ -57,7 +110,7 @@ class EntityPlayer extends Entity
 
     if (inventory)
     {
-      for (int i=0; i<inventoryItems.length; i++)
+      for (int i=0; i<inventoryItems[page].length; i++)
       {
         if (mouseX>width/5+w-40 && mouseX<width/5+w+85 && mouseY>height/2+h-10 && mouseY<height/2+h+60)
         {
@@ -67,7 +120,8 @@ class EntityPlayer extends Entity
             selectW = w;
             selectH = h;
             selectedItemIndex = i;
-          } else
+          }
+          else
           {
             selectedItemIndex2 = i;
             selected = false;
@@ -84,42 +138,78 @@ class EntityPlayer extends Entity
       }
     }
   }
-
+  
+  int seperateInventory(Item item)
+  {
+    int tab=3;
+    if (item.getType().startsWith("Item.Weapon."))
+    {
+      tab=0;
+    }
+    else if (item.getType().startsWith("Item.Armor."))
+    {
+      tab=1;
+    }
+    else if (item.getType().startsWith("Item.Consumable."))
+    {
+      tab=2;
+    }
+    return tab;
+  }
+  
   void addItem(int index, Item item)
   {
-    if (index >= inventoryItems.length || index < 0);
-    inventoryItems[index] = item;
+    if (index >= inventoryItems[seperateInventory(item)].length || index < 0) return;  
+    inventoryItems[seperateInventory(item)][index] = item;
+    if (index == 0) statManager.addStat(item.stat);
   }
 
-  void switchItems(int index, int index2)
+  void switchItems(int index1, int index2)
   {
-    Item temp = inventoryItems[index2];
-    inventoryItems[index2] = inventoryItems[index];
-    inventoryItems[index] = temp;
+    Item i1 = inventoryItems[page][index1];
+    Item i2 = inventoryItems[page][index2];
+    inventoryItems[page][index2] = i1;
+    inventoryItems[page][index1] = i2;
+    if (index1 == 0)
+    {
+      if (i1 != null) statManager.removeStat(i1.stat);
+      if (i2 != null) statManager.addStat(i2.stat);
+    }
+    else if (index2 == 0)
+    {
+      if (i2 != null) statManager.removeStat(i2.stat);
+      if (i1 != null) statManager.addStat(i1.stat);
+    }
   }
 
-  int emptyInventorySlot()
+  int emptyInventorySlot(int i)
   {
     int returnVal = -1;
 
-    for (int i=0; i<inventoryItems.length; i++)
+    for (int j=0; j<inventoryItems[page ].length; j++)
     {
-      if (inventoryItems[i] == null)
+      if (inventoryItems[i][j] == null)
       {
-        returnVal = i;
+        returnVal = j;
         break;
       }
     }
     return returnVal;
   }
-  
+
   void update()
   {
     super.update();
-    if (keyDown == 1) setSprite("Left");
-    else if (keyDown == 2) setSprite("Right");
+    if (mouseX < this.position.x - offset.x) this.setSprite("Left");
+    else this.setSprite("Right");
+    statManager.update();
   }
   
+  float getAttack()
+  {
+    return attack + statManager.getChange("attack");
+  }
+
   boolean collidedWithBlock()
   {
     int i0 = (int)(position.x/blockSize);
@@ -130,13 +220,13 @@ class EntityPlayer extends Entity
     //if (position.x < 0 || position.y < 0 || position.x + hitbox.x >= width || position.y + hitbox.y >= height) return true;
     if (i1 >= blocks.length || j2 >= blocks.length) return true;
     return ((blocks[i0][j0] != null)
-         || (blocks[i1][j0] != null)
-         || (blocks[i0][j1] != null)
-         || (blocks[i1][j1] != null)
-         || (blocks[i0][j2] != null)
-         || (blocks[i1][j2] != null));
+      || (blocks[i1][j0] != null)
+      || (blocks[i0][j1] != null)
+      || (blocks[i1][j1] != null)
+      || (blocks[i0][j2] != null)
+      || (blocks[i1][j2] != null));
   }
-  
+
   void collide(Entity other)
   {
   }
