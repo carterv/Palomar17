@@ -21,8 +21,9 @@ class SpriteManager
     sprites.put("SelectedEquipment", loadImage("/Sprites/SelectedEquipment.png"));
     sprites.put("Entity.Player", loadImage("/Sprites/charactertemplate2.png"));
     sprites.put("EquipmentSlot", loadImage("/Sprites/EquipmentSlot.png"));
-    sprites.put("Projectile.Sword", loadImage("/Sprites/ProjectileSword.png"));
+    sprites.put("Projectile.Melee", loadImage("/Sprites/ProjectileSword.png"));
     sprites.put("Enemy.Blob", loadImage("/Sprites/EnemyBlob.png"));
+    sprites.put("Projectile.Ranged", loadImage("/Sprites/ProjectileBow.png"));
   }
   
   PImage getSprite(String type)

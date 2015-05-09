@@ -1,12 +1,24 @@
 class Item extends Entity
 {
   Stat stat;
+  int projectileDistance;
+  
+  Item(PVector position, String type, int projectileDistance, Stat stat)
+  {
+    super(position);
+    this.type="Item."+type;
+    this.stat = stat;
+    this.projectileDistance = projectileDistance;
+    hitbox = new PVector(blockSize, blockSize);
+    sprite = spriteManager.getSprite(this.type);
+  }
   
   Item(PVector position, String type, Stat stat)
   {
     super(position);
     this.type="Item."+type;
     this.stat = stat;
+    projectileDistance = 0;
     hitbox = new PVector(blockSize, blockSize);
     sprite = spriteManager.getSprite(this.type);
   }

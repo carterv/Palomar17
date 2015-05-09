@@ -40,8 +40,8 @@ void setup()
   entities.add(player);
   fillBlocks();
 
-  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
-  entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
+  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", 10, new Stat("attack", "+AttackSword", 10, -1)));
+  entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
 
   inventory=false;
 }
@@ -132,8 +132,8 @@ void keyPressed()
     inventory = !inventory;
     player.setSelect(false);
   }
-  else if (key == '1') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Melee", new Stat("attack", "+AttackSword", 10, -1)));
-  else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", new Stat("attack", "+AttackBow", 5, -1)));
+  else if (key == '1') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Melee", 10, new Stat("attack", "+AttackSword", 10, -1)));
+  else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
   else if (key == '3') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Consumable.Potion", new Stat("life", "Heal", 1, -1)));
   else if (key == '4') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
 }
@@ -200,12 +200,10 @@ void renderBlocks()
 
 void mousePressed()
 {
-  if (mouseButton==LEFT && !inventory)
+  if (mouseButton==LEFT && !inventory && player.equippedItems[0] != null)
   {
-    PVector projectileVector = new PVector(mouseX - player.position.x + offset.x, mouseY - player.position.y + offset.y);
-    projectileVector.normalize();
-    PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.position);
-    entities.add(new Projectile(position, PVector.mult(projectileVector, 6), "Sword", 5, player.getAttack()));
+    entities.add(player.makeProjectile());
+    //print(player.equippedItems[0].type.substring(12));
   }
 }
 
