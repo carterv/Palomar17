@@ -361,7 +361,7 @@ class EntityPlayer extends Entity
     PVector projectileVector = new PVector(mouseX - player.getCenter().x + offset.x, mouseY - player.getCenter().y + offset.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.getCenter());
-    return new Projectile(PVector.add(projectileVector, player.getPosition()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack());
+    return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack());
   }
 }
 

@@ -126,7 +126,7 @@ class Projectile extends Entity
   {
     if (sprite != null)
     {
-      image(sprite, position.x, position.y);
+      image(sprite, position.x, position.y - sprite.height/2);
     }
   }
   
