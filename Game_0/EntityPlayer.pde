@@ -44,11 +44,11 @@ class EntityPlayer extends Entity
     //displays inventory
     image(spriteManager.getSprite("Inventory"), width/5, height/2);
     image(spriteManager.getSprite("Entity.Player", 125), width/2-30, height/5-20);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-35, height/25);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-120, height/5-10);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2+50, height/5-10);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-100, height/3);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2+30, height/3);
+    image(spriteManager.getSprite("EquipmentSlotHelmet"), width/2-35, height/25);
+    image(spriteManager.getSprite("EquipmentSlotChest"), width/2-120, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlotWeapon"), width/2+50, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlotPants"), width/2-100, height/3);
+    image(spriteManager.getSprite("EquipmentSlotBoots"), width/2+30, height/3);
     if (page==0)
     {
       image(spriteManager.getSprite("InventoryTab0"), width/5, height/2+197); //-3
@@ -79,24 +79,29 @@ class EntityPlayer extends Entity
       }
     }
 
-    if (equippedItems[0]!=null)
+    if (equippedItems[0]!=null) // Weapon
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2+50, height/5-10);
       image(spriteManager.getSprite(equippedItems[0].type, 50), width/2+60, height/5);
     }
-    if (equippedItems[1]!=null)
+    if (equippedItems[1]!=null) //Boots
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2+30, height/3);
       image(spriteManager.getSprite(equippedItems[1].type, 50), width/2+40, height/3+10);
     }
-    if (equippedItems[2]!=null)
+    if (equippedItems[2]!=null) //Pants
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-100, height/3);
       image(spriteManager.getSprite(equippedItems[2].type, 50), width/2-90, height/3+10);
     }
-    if (equippedItems[3]!=null)
+    if (equippedItems[3]!=null) //Chest
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-120, height/5-10);
       image(spriteManager.getSprite(equippedItems[3].type, 50), width/2-110, height/5);
     }
-    if (equippedItems[4]!=null)
+    if (equippedItems[4]!=null) //Helmet
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-35, height/25);
       image(spriteManager.getSprite(equippedItems[4].type, 50), width/2-25, height/25+10);
     }
 

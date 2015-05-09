@@ -19,7 +19,7 @@ int timer = 0;
 void setup()
 {
   size(1000, 600);
-  background(0);
+  background(255);
   cursor(CROSS);
 
   blockSize = 20;
@@ -40,7 +40,7 @@ void setup()
   entities.add(player);
   fillBlocks();
 
-  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", 10, new Stat("attack", "+AttackSword", 10, -1)));
+  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", 8, new Stat("attack", "+AttackSword", 10, -1)));
   entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
 
   inventory=false;
