@@ -24,6 +24,16 @@ class SpriteManager
     sprites.put("Projectile.Melee", loadImage("/Sprites/ProjectileSword.png"));
     sprites.put("Enemy.Blob", loadImage("/Sprites/EnemyBlob.png"));
     sprites.put("Projectile.Ranged", loadImage("/Sprites/ProjectileBow.png"));
+    sprites.put("1", loadImage("/Sprites/DamageOne.png"));
+    sprites.put("2", loadImage("/Sprites/DamageTwo.png"));
+    sprites.put("3", loadImage("/Sprites/DamageThree.png"));
+    sprites.put("4", loadImage("/Sprites/DamageFour.png"));
+    sprites.put("5", loadImage("/Sprites/DamageFive.png"));
+    sprites.put("6", loadImage("/Sprites/DamageSix.png"));
+    sprites.put("7", loadImage("/Sprites/DamageSeven.png"));
+    sprites.put("8", loadImage("/Sprites/DamageEight.png"));
+    sprites.put("9", loadImage("/Sprites/DamageNine.png"));
+    sprites.put("0", loadImage("/Sprites/DamageZero.png"));
   }
   
   PImage getSprite(String type)
