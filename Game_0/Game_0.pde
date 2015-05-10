@@ -4,7 +4,7 @@ Block[][] blocks;
 EntityPlayer player;
 Table map;
 
-ArrayList<Entity> entities;
+static ArrayList<Entity> entities;
 final float MOVESPEED = 3.5;
 boolean inventory;
 boolean mousePress;
@@ -39,9 +39,6 @@ void setup()
   player = new EntityPlayer(new PVector(width/2, height/2));
   entities.add(player);
   fillBlocks();
-
-  entities.add(new Item(new PVector(width/4, 400), "Weapon.Melee", 8, new Stat("attack", "+AttackSword", 10, -1)));
-  entities.add(new Item(new PVector(width*3/4, 400), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
 
   inventory=false;
 }
@@ -135,7 +132,8 @@ void keyPressed()
   else if (key == '1') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Melee", 10, new Stat("attack", "+AttackSword", 10, -1)));
   else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
   else if (key == '3') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Consumable.Potion", new Stat("life", "Heal", 1, -1)));
-  else if (key == '4') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
+  else if (key == '4') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Staff.Flame", 75, new Stat("magic", "+MagicStaffFlame", 15, -1)));
+  else if (key == '5') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
   else key = 0;
 }
 
@@ -204,7 +202,6 @@ void mousePressed()
   if (mouseButton==LEFT && !inventory && player.equippedItems[0] != null)
   {
     entities.add(player.makeProjectile());
-    //print(player.equippedItems[0].type.substring(12));
   }
 }
 
