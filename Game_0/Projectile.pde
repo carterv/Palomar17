@@ -41,7 +41,7 @@ class Projectile extends Entity
     if (velocity.y > 10) velocity.y = 10;
     
     life--;
-    if(life <= 0){alive = false;}
+    if(life <= 0) alive = false;
   }
   
   void draw()

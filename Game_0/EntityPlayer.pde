@@ -9,7 +9,7 @@ class EntityPlayer extends Entity
   int selectedItemIndex, selectedItemIndex2;
   int page;
   PImage border;
-  float attack;
+  float attack, magic;
 
   EntityPlayer(PVector position)
   {
@@ -31,9 +31,11 @@ class EntityPlayer extends Entity
     statTypes.add("attack");
     statTypes.add("life");
     statTypes.add("defense");
+    statTypes.add("magic");
     statManager = new StatManager(statTypes);
     page=0;
     attack = 10;
+    magic = 20;
   }
 
   void inventory()
@@ -45,11 +47,11 @@ class EntityPlayer extends Entity
     //displays inventory
     image(spriteManager.getSprite("Inventory"), width/5, height/2);
     image(spriteManager.getSprite("Entity.Player", 125), width/2-30, height/5-20);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-35, height/25);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-120, height/5-10);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2+50, height/5-10);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2-100, height/3);
-    image(spriteManager.getSprite("EquipmentSlot"), width/2+30, height/3);
+    image(spriteManager.getSprite("EquipmentSlotHelmet"), width/2-35, height/25);
+    image(spriteManager.getSprite("EquipmentSlotChest"), width/2-120, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlotWeapon"), width/2+50, height/5-10);
+    image(spriteManager.getSprite("EquipmentSlotPants"), width/2-100, height/3);
+    image(spriteManager.getSprite("EquipmentSlotBoots"), width/2+30, height/3);
     if (page==0)
     {
       image(spriteManager.getSprite("InventoryTab0"), width/5, height/2+197); //-3
@@ -80,24 +82,29 @@ class EntityPlayer extends Entity
       }
     }
 
-    if (equippedItems[0]!=null)
+    if (equippedItems[0]!=null) // Weapon
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2+50, height/5-10);
       image(spriteManager.getSprite(equippedItems[0].type, 50), width/2+60, height/5);
     }
-    if (equippedItems[1]!=null)
+    if (equippedItems[1]!=null) //Boots
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2+30, height/3);
       image(spriteManager.getSprite(equippedItems[1].type, 40), width/2+40, height/3+10);
     }
-    if (equippedItems[2]!=null)
+    if (equippedItems[2]!=null) //Pants
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-100, height/3);
       image(spriteManager.getSprite(equippedItems[2].type, 50), width/2-90, height/3+10);
     }
-    if (equippedItems[3]!=null)
+    if (equippedItems[3]!=null) //Chest
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-120, height/5-10);
       image(spriteManager.getSprite(equippedItems[3].type, 50), width/2-110, height/5);
     }
-    if (equippedItems[4]!=null)
+    if (equippedItems[4]!=null) //Helmet
     {
+      image(spriteManager.getSprite("EquipmentSlot"), width/2-35, height/25);
       image(spriteManager.getSprite(equippedItems[4].type, 50), width/2-25, height/25+10);
     }
 
@@ -330,6 +337,11 @@ class EntityPlayer extends Entity
   {
     return attack + statManager.getChange("attack");
   }
+  
+  float getMagic()
+  {
+    return magic + statManager.getChange("magic");
+  }
 
   boolean collidedWithBlock()
   {
@@ -362,7 +374,8 @@ class EntityPlayer extends Entity
     PVector projectileVector = new PVector(mouseX - player.getCenter().x + offset.x, mouseY - player.getCenter().y + offset.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.getCenter());
-    return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack());
+    if (equippedItems[0].getType().startsWith("Item.Weapon.Staff")) return new ProjectileMagic(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 3), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getMagic());
+    else return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack());
   }
 }
 
