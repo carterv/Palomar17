@@ -48,11 +48,6 @@ void draw()
   if (!inventory)
   {
     background(255);
-    if(player.alive)
-    {
-      fill(255, 0, 0);
-      rect(40, 30, player.life*2 + 5, 20);
-    }
     pushMatrix();
     translate(-offset.x, -offset.y);
 
@@ -88,6 +83,12 @@ void draw()
     
     //scrolling code
     popMatrix();
+    
+    if(player.alive)
+    {
+      fill(255, 0, 0);
+      rect(40, 30, player.life*2 + 5, 20);
+    }
 
     int realX = (int)(player.position.x - offset.x);
     int realY = (int)(player.position.y - offset.y);
