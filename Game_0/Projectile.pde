@@ -3,8 +3,9 @@ class Projectile extends Entity
   String type;
   PImage sprite;
   float damage;
+  boolean explodes;
   
-  Projectile(PVector location, PVector velocity, String type, int life, float damage)
+  Projectile(PVector location, PVector velocity, String type, int life, float damage, boolean explodes)
   {
     super(location);
     this.velocity = velocity;
@@ -13,6 +14,7 @@ class Projectile extends Entity
     sprite = spriteManager.getSprite(this.type);
     this.life = life;
     this.damage = damage;
+    this.explodes = explodes;
     this.hitbox = new PVector(sprite.width, sprite.height);
   }
   
@@ -29,6 +31,7 @@ class Projectile extends Entity
         if (collidedWithBlock())
         {
           //kill horizontal movement because the entity collided
+          if (explodes) collide(this);
           this.alive = false;
         }
         
@@ -79,6 +82,25 @@ class Projectile extends Entity
       other.velocity.y = -5;
       other.damage(damage);
       this.alive = false;
+    }
+    
+    if (explodes)
+    {
+      for (Entity e : Game_0.entities)
+      {
+        if (e.getType().startsWith("Enemy."))
+        {
+          float dist = sqrt(sq(getCenter().x+hitbox.x/2-e.getCenter().x) + sq(getCenter().y-e.getCenter().y));
+          if (dist < 50)
+          {
+            float i = (other.getCenter().x) - (getCenter().x);
+            i = i/abs(i == 0 ? 1 : i);
+            e.velocity.x = i*8;
+            e.velocity.y = -5;
+            e.damage(damage*(1/dist));
+          }
+        }
+      }
     }
   }
 }

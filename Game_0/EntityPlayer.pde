@@ -374,8 +374,8 @@ class EntityPlayer extends Entity
     PVector projectileVector = new PVector(mouseX - player.getCenter().x + offset.x, mouseY - player.getCenter().y + offset.y);
     projectileVector.normalize();
     PVector position = PVector.add(PVector.mult(projectileVector, blockSize), player.getCenter());
-    if (equippedItems[0].getType().startsWith("Item.Weapon.Staff")) return new ProjectileMagic(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 3), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getMagic());
-    else return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack());
+    if (equippedItems[0].getType().startsWith("Item.Weapon.Staff")) return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 4), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getMagic(), true);
+    else return new Projectile(PVector.add(projectileVector, player.getCenter()), PVector.mult(projectileVector, 6), equippedItems[0].type.substring(12), equippedItems[0].projectileDistance, player.getAttack(), false);
   }
 }
 
