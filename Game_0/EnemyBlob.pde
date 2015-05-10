@@ -13,6 +13,13 @@ class EnemyBlob extends Entity
     this.hitbox = new PVector(sprite.width, sprite.height);
   }
   
+  void draw()
+  {
+    super.draw();
+    fill(255, 0, 0);
+    rect(this.position.x - 15, this.position.y - 15, this.life/2 + 3, 10);  
+  }
+  
   void update()
   {
     super.update();

@@ -48,7 +48,11 @@ void draw()
   if (!inventory)
   {
     background(255);
-
+    if(player.alive)
+    {
+      fill(255, 0, 0);
+      rect(40, 30, player.life*2 + 5, 20);
+    }
     pushMatrix();
     translate(-offset.x, -offset.y);
 
@@ -81,7 +85,7 @@ void draw()
     }
 
     renderBlocks();
-
+    
     //scrolling code
     popMatrix();
 
@@ -200,7 +204,7 @@ void renderBlocks()
 
 void mousePressed()
 {
-  if (mouseButton==LEFT && !inventory && player.equippedItems[0] != null)
+  if (mouseButton==LEFT && !inventory && player.equippedItems[0] != null && player.alive)
   {
     entities.add(player.makeProjectile());
   }
