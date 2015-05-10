@@ -12,6 +12,7 @@ class SpriteManager
     sprites.put("Item.Weapon.Melee", loadImage("/Sprites/ItemMelee.png"));
     sprites.put("Item.Weapon.Ranged", loadImage("Sprites/ItemRanged.png"));
     sprites.put("Item.Consumable.Potion", loadImage("/Sprites/ItemPotion.png"));
+    sprites.put("Item.Armor.Boots", loadImage("/Sprites/ItemBoots.png"));
     sprites.put("Inventory", loadImage("/Sprites/Inventory2.png"));
     sprites.put("InventoryTab0", loadImage("/Sprites/Tab0.png"));
     sprites.put("InventoryTab1", loadImage("/Sprites/Tab1.png"));

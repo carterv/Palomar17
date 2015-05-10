@@ -30,6 +30,7 @@ class EntityPlayer extends Entity
     ArrayList<String> statTypes = new ArrayList<String>();
     statTypes.add("attack");
     statTypes.add("life");
+    statTypes.add("defense");
     statManager = new StatManager(statTypes);
     page=0;
     attack = 10;
@@ -85,7 +86,7 @@ class EntityPlayer extends Entity
     }
     if (equippedItems[1]!=null)
     {
-      image(spriteManager.getSprite(equippedItems[1].type, 50), width/2+40, height/3+10);
+      image(spriteManager.getSprite(equippedItems[1].type, 40), width/2+40, height/3+10);
     }
     if (equippedItems[2]!=null)
     {

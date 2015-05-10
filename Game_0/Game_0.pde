@@ -136,6 +136,7 @@ void keyPressed()
   else if (key == '2') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Weapon.Ranged", 75, new Stat("attack", "+AttackBow", 5, -1)));
   else if (key == '3') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Consumable.Potion", new Stat("life", "Heal", 1, -1)));
   else if (key == '4') entities.add(new EnemyBlob(new PVector(mouseX+offset.x, mouseY+offset.y)));
+  else if (key == '5') entities.add(new Item(new PVector(mouseX+offset.x, mouseY+offset.y), "Armor.Boots", new Stat("defense", "+SpeedBoots", 10, -1)));
 }
 
 void keyReleased()
